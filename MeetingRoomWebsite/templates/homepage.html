@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block style %}
+<style>
+  img.middle {
+      vertical-align: middle;
+      padding-left:5em;
+  }
+</style>
+{% endblock style %}
+
+{% block content %}
+  <main>
+    <h2>Welcome {{fullname}}</h2>
+    <br>
+    <h3>Upcoming Bookings</h3>
+    <table class="bordered responsive-table centered">
+       <thead>
+         <tr>
+             <th>Date</th>
+             <th>Time</th>
+             <th>People</th>
+             <th>Room</th>
+         </tr>
+       </thead>
+       <tbody>
+         {% if bookings != '[]' %}
+         {% for book in bookings %}
+         <tr>
+           <td>{{book.booking_date}}</td>
+           <td>{{book.booking_time}}</td>
+           <td>{{book.capacity}}</td>
+           {% if book.room == '1' %}
+            <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room1.jpg' %}"></td>
+           {% elif book.room == '2' %}
+            <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room2.jpg' %}"></td>
+           {% elif book.room == '3' %}
+            <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room3.jpg' %}"></td>
+           {% elif book.room == '4' %}
+            <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room4.jpg' %}"></td>
+           {% endif %}
+         </tr>
+         {% endfor %}
+         {% else %}
+         <tr>
+           <td colspan="4" style="font-size:20px">No Upcoming Bookings</td>
+          </tr>
+         {% endif %}
+       </tbody>
+     </table>
+    <br><br>
+    <h3>All bookings for today</h3>
+    <table class="bordered responsive-table centered">
+       <thead>
+         <tr>
+            <th>Name</th>
+             <th>Date</th>
+             <th>Time</th>
+             <th>People</th>
+             <th>Room</th>
+         </tr>
+       </thead>
+       <tbody>
+         {% if allBookings != '[]' %}
+         {% for book in allBookings %}
+         <tr>
+           <td>{{book.fullname}}</td>
+           <td>{{book.booking_date}}</td>
+           <td>{{book.booking_time}}</td>
+           <td>{{book.capacity}}</td>
+           {% if book.room == '1' %}
+            <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room1.jpg' %}"></td>
+           {% elif book.room == '2' %}
+            <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room2.jpg' %}"></td>
+           {% elif book.room == '3' %}
+            <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room3.jpg' %}"></td>
+           {% elif book.room == '4' %}
+            <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room4.jpg' %}"></td>
+           {% endif %}
+         </tr>
+         {% endfor %}
+         {% else %}
+         <tr>
+           <td colspan="5" style="font-size:20px">No Bookings for any rooms today</td>
+          </tr>
+         {% endif %}
+       </tbody>
+     </table>
+     <br><br><br>
+  </main>
+
+{% endblock content %}
+
+{% block javascript %}
+{% if message %}
+<script>
+  window.onload = function(){
+    Materialize.toast('{{message}}', 4000,'rounded')
+  }
+
+</script>
+{% endif %}
+{% endblock javascript %}

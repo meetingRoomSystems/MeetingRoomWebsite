@@ -1,0 +1,109 @@
+<!doctype html>
+{% load staticfiles %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Compulynx Meeting Room Booking</title>
+    <meta name="description" content="Website to book meeting rooms at Compulynx office Nairobi,Kenya">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <style>
+      body{
+        /*background-color: #ef9a9a;*/
+        background-image: url("{% static 'background.jpg' %}");
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+      main {
+          padding-left: 100px;
+          padding-right: 100px;
+          flex: 1 0 auto;
+        }
+      @media only screen and (max-width : 992px) {
+          header, main, footer {
+            padding-left: 0;
+          }
+      }
+      #datetime{
+        position:absolute;
+        top:0;
+        right:0;
+      }
+    </style>
+    {% block style %}
+    {% endblock style %}
+  </head>
+
+  <body>
+    <ul id="slide-out" class="side-nav" >
+        <li><div class="user-view">
+          <div class="background" style="background: #ef9a9a;">
+          </div>
+          <h3>{{fullname}}</h3>
+          <a class="subheader" style="font-size:25px">{{username}}</a>
+        </div></li>
+        <li><div class="divider"></div></li>
+        <li><a id="homepageOption" class="waves-effect"  href="{% url 'homepage' username %}"><i class="material-icons">home</i>Homepage</a></li>
+        <li><a class="waves-effect" href="{% url 'newBooking' username %}"><i class="material-icons">add</i>New Booking</a></li>
+        <li><a class="waves-effect" href="{% url 'manage' username %}"><i class="material-icons">delete</i>Delete my booking</a></li>
+        <li><a class="waves-effect" href="{% url 'allBookings' username %}"><i class="material-icons">today</i>View all bookings</a></li>
+        <li><a class="waves-effect" href="{% url 'rooms' username %}"><i class="material-icons">room</i>Meeting Rooms</a></li>
+        {% if role == 'admin' %}
+        <li><a class="waves-effect" href="{% url 'adminSettings' username %}"><i class="material-icons">settings</i>Admin Settings</a></li>
+        {% endif %}
+        <li><a class="waves-effect" href="{% url 'logout' username %}"><i class="material-icons">exit_to_app</i>Log out</a></li>
+    </ul>
+    <a href="#" data-activates="slide-out" class="button-collapse"><font color="#ef9a9a"><i class="medium material-icons">menu</i></font></a>
+    <div id="datetime">
+      <h6 style="float:left;font-size:20px">Date and time:</h6>
+      <iframe src="http://free.timeanddate.com/clock/i5sisgcy/n170/fn15/fs20/tct/pct/ftb/pd2/tt0/td2/th1/tb2" frameborder="0" width="355" height="50" allowTransparency="true"></iframe>
+    </div>
+    {% block content %}
+    {% endblock content %}
+
+    <div class="fixed-action-btn">
+       <a class="btn btn-floating btn-large red pulse" href="{% url 'newBooking' username %}">
+         <i class="large material-icons">add</i>
+       </a>
+       <ul>
+         <li><a class="btn-floating red" href="{% url 'manage' username %}"><i class="material-icons">delete</i></a></li>
+         <li><a class="btn-floating yellow darken-1" href="{% url 'allBookings' username %}"><i class="material-icons">today</i></a></li>
+         <li><a class="btn-floating green"  href="{% url 'rooms' username %}"><i class="material-icons">room</i></a></li>
+         {% if role == 'admin' %}
+         <li><a class="btn-floating blue"  href="{% url 'adminSettings' username %}"><i class="material-icons">settings</i>Admin Settings</a></li>
+         {% endif %}
+         <li><a class="btn-floating red" href="{% url 'logout' username %}"><i class="material-icons">exit_to_app</i></a></li>
+         <li><a id="menufob" class="btn-floating blue" href="#" data-activates="slide-out"><i class="material-icons">menu</i></a></li>
+       </ul>
+     </div>
+
+    <footer class="page-footer" style="background-color: #ef9a9a">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Compulynx booking system</h5>
+            <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Android Application</h5>
+            <ul>
+              <li><a class="grey-text text-lighten-3" href="#!"><i class="large material-icons">android</i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      $(".button-collapse").sideNav();
+      $("#menufob").sideNav();
+    </script>
+    {% block javascript %}
+    {% endblock javascript %}
+
+  </body>
+</html>

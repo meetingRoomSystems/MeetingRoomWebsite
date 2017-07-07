@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<main>
+<h3>All rooms availabe at Compulynx Nairobi</h3>
+<table class="bordered responsive-table centered">
+   <thead>
+     <tr>
+        <th>Room Number</th>
+        <th>Maximum Capacity</th>
+        <th>Features</th>
+        <th>Location</th>
+        <th></th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr>
+       <td>Room 1</td>
+       <td>10 people</td>
+       <td>TV, Speaker, Projector</td>
+       <td>4th Floor, Near canteen</td>
+       <td><img class="materialboxed" width="300" src="{% static 'room1.jpg' %}"></td>
+     </tr>
+     <tr>
+       <td>Room 2</td>
+       <td>15 people</td>
+       <td>TV, Speaker, Projector</td>
+       <td>4th Floor, Near canteen</td>
+       <td><img class="materialboxed" width="300" src="{% static 'room2.jpg' %}"></td>
+     </tr>
+     <tr>
+       <td>Room 3</td>
+       <td>5 people</td>
+       <td>TV, Speaker, Projector</td>
+       <td>4th Floor, Near canteen</td>
+       <td><img class="materialboxed" width="300" src="{% static 'room3.jpg' %}"></td>
+     </tr>
+     <tr>
+       <td>Room 4</td>
+       <td>20 people</td>
+       <td>TV, Speaker, Projector</td>
+       <td>4th Floor, Near canteen</td>
+       <td><img class="materialboxed" width="300" src="{% static 'room4.jpg' %}"></td>
+     </tr>
+   </tbody>
+ </table>
+<br><br>
+<div>
+  <form action="{% url 'allBookings' username %}" method="POST" id="post-form" style="float:left;width:300px">{% csrf_token %}
+    <a href="#!" class="btn" onclick="document.forms['post-form'].submit();">View Rooms Booked Today</a>
+    <input type="date" name="date" id="date" style="visibility:hidden" value="">
+    <input type="text" name="type" id="type" style="visibility:hidden" value="1">
+  </form>
+  <form action="{% url 'newBooking' username %}" method="POST" id="book-room" style="float:right">{% csrf_token %}
+    <a href="#!" class="btn" onclick="document.forms['book-room'].submit();">View Available Rooms Today</a>
+    <input type="date" name="date" id="date" style="visibility:hidden" value="">
+    <input type="text" name="type" id="type" style="visibility:hidden" value="1">
+  </form>
+</div>
+<br><br><br>
+</main>
+
+{% endblock content %}

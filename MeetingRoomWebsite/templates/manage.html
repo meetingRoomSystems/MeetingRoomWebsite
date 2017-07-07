@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block style %}
+<style>
+  img.middle {
+      vertical-align: middle;
+      padding-left:5em;
+  }
+</style>
+{% endblock style %}
+
+{% block content %}
+<main>
+  <h2>Welcome {{fullname}}</h2>
+  <br>
+  <h3>All your bookings.</h3>
+  <table class="bordered responsive-table centered">
+     <thead>
+       <tr>
+           <th>Date</th>
+           <th>Time</th>
+           <th>People</th>
+           <th>Room</th>
+           <th></th>
+       </tr>
+     </thead>
+     <tbody>
+       {% if bookings != '[]' %}
+       {% for book in bookings %}
+       <tr>
+         <td>{{book.booking_date}}</td>
+         <td>{{book.booking_time}}</td>
+         <td>{{book.capacity}}</td>
+         {% if book.room == '1' %}
+          <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room1.jpg' %}"></td>
+         {% elif book.room == '2' %}
+          <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room2.jpg' %}"></td>
+         {% elif book.room == '3' %}
+          <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room3.jpg' %}"></td>
+         {% elif book.room == '4' %}
+          <td>Room {{book.room}} <img class="middle" width="300" src="{% static 'room4.jpg' %}"></td>
+         {% endif %}
+         <td><a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'delete' username book.booking_date book.booking_time book.room %}">DELETE</a>
+       </tr>
+       {% endfor %}
+       {% else %}
+       <tr>
+         <td colspan="5" style="font-size:20px">No bookings availabe to delete</td>
+        </tr>
+       {% endif %}
+     </tbody>
+   </table>
+ </main>
+ <br><br><br>
+
+{% endblock content %}
+
+{% block javascript %}
+{% if deleted %}
+<script>
+  window.onload = function(){
+    Materialize.toast('{{deleted}}', 4000,'rounded')
+  }
+
+</script>
+{% endif %}
+{% endblock javascript %}

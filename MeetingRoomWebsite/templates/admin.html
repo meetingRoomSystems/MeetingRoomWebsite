@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block style %}
+<style>
+  img.middle {
+      vertical-align: middle;
+      padding-left:5em;
+  }
+</style>
+{% endblock style %}
+
+{% block content %}
+<main>
+  <h3>All Bookings</h3>
+  <h5>Admin is only allowed to change the room of a booking. The timing and date cannot be changed.</h5>
+  <table class="bordered responsive-table centered">
+     <thead>
+       <tr>
+           <th>By</th>
+           <th>Date</th>
+           <th>Time</th>
+           <th>People</th>
+           <th>Room</th>
+           <th>Change to room:</th>
+       </tr>
+     </thead>
+     <tbody>
+       {% if bookings != '[]' %}
+       {% for book in bookings %}
+       <tr>
+         <td>{{book.fullname}}
+         <td>{{book.booking_date}}</td>
+         <td>{{book.booking_time}}</td>
+         <td>{{book.capacity}}</td>
+         <td>Room {{book.room}}</td>
+         <td>
+           <div>
+             {% if '1' in book.availabeRooms and book.capacity < 11 %}
+             <a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_time book.room '1'  %}">1</a>
+             {% endif %}
+             {% if '2' in book.availabeRooms and book.capacity < 16 %}
+             <a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_time book.room '2'  %}">2</a>
+             {% endif %}
+             {% if '3' in book.availabeRooms and book.capacity < 6 %}
+             <a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_time book.room '3'  %}">3</a>
+             {% endif %}
+             {% if '4' in book.availabeRooms and book.capacity < 21 %}
+             <a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_time book.room '4'  %}">4</a>
+             {% endif %}
+           </div>
+       </tr>
+       {% endfor %}
+       {% else %}
+       <tr>
+         <td colspan="6" style="font-size:20px">No bookings availabe to manage</td>
+        </tr>
+       {% endif %}
+     </tbody>
+   </table>
+ </main>
+ <br><br><br>
+ <a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'deleteOld' username %}">Delete Old Bookings</a>
+{% endblock content %}
+
+{% block javascript %}
+
+<script>
+  window.onload = function(){
+    {% if updated != '' %}
+    Materialize.toast('{{updated}}', 4000,'rounded')
+    {% endif %}
+    {% if deleteOld != '' %}
+    Materialize.toast('{{deleteOld}}', 4000,'rounded')
+    {% endif %}
+  }
+</script>
+
+{% endblock javascript %}
