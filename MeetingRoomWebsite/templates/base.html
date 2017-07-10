@@ -36,9 +36,24 @@
     </style>
     {% block style %}
     {% endblock style %}
+
+    <script type="text/javascript">
+      function display_c(){
+      var refresh=1000; // Refresh rate in milli seconds
+      mytime=setTimeout('display_ct()',refresh)
+      }
+      function display_ct() {
+      var strcount;
+      var x = new Date();
+      var x1= x.getDate() + "/" + x.getMonth() + "/" +  x.getFullYear();
+      x1 = x1 + " - " + x.getHours( )+ ":" + x.getMinutes() + ":" + x.getSeconds();
+      document.getElementById('ct').innerHTML = x1;
+      tt=display_c();
+      }
+    </script>
   </head>
 
-  <body>
+  <body onload=display_ct();>
     <ul id="slide-out" class="side-nav" >
         <li><div class="user-view">
           <div class="background" style="background: #ef9a9a;">
@@ -60,7 +75,7 @@
     <a href="#" data-activates="slide-out" class="button-collapse"><font color="#ef9a9a"><i class="medium material-icons">menu</i></font></a>
     <div id="datetime">
       <h6 style="float:left;font-size:20px">Date and time:</h6>
-      <iframe src="http://free.timeanddate.com/clock/i5sisgcy/n170/fn15/fs20/tct/pct/ftb/pd2/tt0/td2/th1/tb2" frameborder="0" width="355" height="50" allowTransparency="true"></iframe>
+      <span id='ct' ></span>
     </div>
     {% block content %}
     {% endblock content %}
