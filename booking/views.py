@@ -228,13 +228,13 @@ def newBooking(request,username):
             room4 = []
             if(allBookingResults['success'] == 2):
                 for booking_time in allBookingResults['room1']:
-                    booked_times_1.append(booking_time['booking_time'])
-                for booking_time in room2:
-                    booked_times_2.append(booking_time['booking_time'])
-                for booking_time in room3:
-                    booked_times_3.append(booking_time['booking_time'])
-                for booking_time in room4:
-                    booked_times_4.append(booking_time['booking_time'])
+                    booked_times_1.append(booking_time)
+                for booking_time in allBookingResults['room2']:
+                    booked_times_2.append(booking_time)
+                for booking_time in allBookingResults['room3']:
+                    booked_times_3.append(booking_time)
+                for booking_time in allBookingResults['room4']:
+                    booked_times_4.append(booking_time)
                 for time in allTimings:
                     if time not in booked_times_1:
                         room1.append(time)

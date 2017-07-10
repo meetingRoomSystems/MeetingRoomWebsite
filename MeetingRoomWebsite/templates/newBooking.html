@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load static %}
 
 {% block style %}
 <style>
@@ -182,6 +182,7 @@
       }
   }
 </style>
+<script src="{% static 'js/newBooking.js' %}"></script>
 {% endblock style %}
 
 {% block content %}
@@ -189,14 +190,14 @@
 </div>
 
 <main>
-  <form action="{% url 'newBooking' username %}" method="POST" id="post-form-new">{% csrf_token %}
+  <form id="post-form-new">{% csrf_token %}
     <label><b>Date</b></label>
     <input type="date" class="datepicker" name="date" id="date" required>
-    <a href="#!" class="btn" onclick="start();">Check Available Bookings</a>
+    <a href="#!" class="btn" onclick="start_2()">Check Available Bookings</a>
     <input type="text" id="name" style="visibility:hidden" value="{{username}}">
     <div id="error"></div>
   </form>
-  <div id="progress" style="visibility: hidden;margin:auto;width:50%">
+  <div id="progress" style="visibility:hidden;margin:auto;width:50%">
     <div class="preloader-wrapper big active">
         <div class="spinner-layer spinner-blue">
           <div class="circle-clipper left">
@@ -240,40 +241,38 @@
   </div>
   <div id="results" style="visibility: hidden;">
     <h3 id="title_booking">All bookings on </h3>
-    <ul id="tabs-swipe-demo" class="tabs tabs-fixed-width">
-      <li class="tab col s3"><a href="#test-swipe-1">Room 1</a></li>
-      <li class="tab col s3"><a href="#test-swipe-2">Room 2</a></li>
-      <li class="tab col s3"><a href="#test-swipe-3">Room 3</a></li>
-      <li class="tab col s3"><a href="#test-swipe-4">Room 4</a></li>
-    </ul>
-    <div id="test-swipe-1" class="col s12 white"> &nbsp;
-      <h2 style="text-align:center;">All Timings for Room 1</h2>
-      <ul id="l1">
+      <ul id="tabs-swipe-demo" class="tabs tabs-fixed-width">
+        <li class="tab col s3"><a href="#test-swipe-1">Room 1</a></li>
+        <li class="tab col s3"><a href="#test-swipe-2">Room 2</a></li>
+        <li class="tab col s3"><a href="#test-swipe-3">Room 3</a></li>
+        <li class="tab col s3"><a href="#test-swipe-4">Room 4</a></li>
       </ul>
+      <div id="test-swipe-1" class="col s12 white"> &nbsp;
+        <h2 style="text-align:center;">All Timings for Room 1</h2>
+        <ul id="l1">
+        </ul>
+      </div>
+      <div id="test-swipe-2" class="col s12 white">&nbsp;
+        <h2 style="text-align:center;">All Timings for Room 2</h2>
+        <ul id="l2">
+        </ul>
+      </div>
+      <div id="test-swipe-3" class="col s12 white">&nbsp;
+        <h2 style="text-align:center;">All Timings for Room 3</h2>
+        <ul id="l3">
+        </ul>
+      </div>
+      <div id="test-swipe-4" class="col s12 white">&nbsp;
+        <h2 style="text-align:center;">All Timings for Room 4</h2>
+        <ul id="l4">
+        </ul>
+      </div>
     </div>
-    <div id="test-swipe-2" class="col s12 white">&nbsp;
-      <h2 style="text-align:center;">All Timings for Room 2</h2>
-      <ul id="l2">
-      </ul>
-    </div>
-    <div id="test-swipe-3" class="col s12 white">&nbsp;
-      <h2 style="text-align:center;">All Timings for Room 3</h2>
-      <ul id="l3">
-      </ul>
-    </div>
-    <div id="test-swipe-4" class="col s12 white">&nbsp;
-      <h2 style="text-align:center;">All Timings for Room 4</h2>
-      <ul id="l4">
-      </ul>
-    </div>
-
-  </div>
   <br><br><br>
 </main>
 {% endblock content %}
 
 {% block javascript %}
-<script src="{% static 'js/newBooking.js' %}"></script>
 <script>
 $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
@@ -291,7 +290,6 @@ $(document).ready(function(){
 </div>
 
 </script>
-
 
 <script>
   window.onload = function(){

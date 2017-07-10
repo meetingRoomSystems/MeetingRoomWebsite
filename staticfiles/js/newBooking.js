@@ -1,9 +1,10 @@
-function start(){
-  create_post('no',$('#name').val());
-
+function start_2(){
+    $("#results").fadeOut(50);
+    document.getElementById("progress").style.visibility = "visible";
+    create_post_2('no',$('#name').val());
 }
 
-function create_post(outside,username) {
+function create_post_2(outside,username) {
     var urlLink = "/"+username + "/new/";
     if(outside == 'yes'){
       var today = new Date();
@@ -13,7 +14,6 @@ function create_post(outside,username) {
       var date = today.getFullYear() + "-" + mm + "-" + dd;
       document.getElementById("error").style.visibility = "hidden";
       $('#title_booking').text("All Avaiable Bookings for Today");
-      $("#results").fadeIn(2000);
     }
     else{
       var today = new Date();
@@ -24,13 +24,14 @@ function create_post(outside,username) {
       var date = d.getFullYear() + "-" + mm + "-" + dd;
       if(today>d){
         $("#results").fadeOut();
+        document.getElementById("progress").style.visibility = "hidden";
         document.getElementById("error").style.visibility = "visible";
         $('#error').html("<h4 style=\"color:red\">Pick a date from today onwards</div>");
         return
       }
       document.getElementById("error").style.visibility = "hidden";
       $('#title_booking').text("All Available Bookings on " + $('#date').val())
-      $("#results").fadeIn(2000);
+
     }
 
     $.ajax({
@@ -41,7 +42,7 @@ function create_post(outside,username) {
           // handle a successful response
           success : function(json) {
             console.log(json); // log the returned json to the console
-            makeTable(json,outside)
+            makeTable_2(json,outside)
           },
 
           // handle a non-successful response
@@ -53,7 +54,7 @@ function create_post(outside,username) {
       });
 };
 
-function makeTable(json,outside){
+function makeTable_2(json,outside){
   if(outside == 'yes'){
     var d = new Date();
   }
@@ -128,6 +129,8 @@ function makeTable(json,outside){
   script2 += "}"
   script = "<script>" + script1 +" " + script2 + "</script>"
   $('#script').append(script);
+  document.getElementById("progress").style.visibility = "hidden";
+  $("#results").fadeIn(2000);
 
 }
 

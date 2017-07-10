@@ -1,4 +1,6 @@
 function start(){
+  $("#results").fadeOut(50);
+  document.getElementById("progress").style.visibility = "visible";
   create_post('no',$('#name').val());
 }
 
@@ -12,7 +14,7 @@ function create_post(outside,username) {
       var date = today.getFullYear() + "-" + mm + "-" + dd;
       document.getElementById("error").style.visibility = "hidden";
       $('#title_booking').text("All bookings for today");
-      $("#results").fadeIn(2000);
+
     }
     else{
       console.log($('#date').val())
@@ -26,13 +28,13 @@ function create_post(outside,username) {
       var date = d.getFullYear() + "-" + mm + "-" + dd;
       if(today>d){
         $("#results").fadeOut();
+        document.getElementById("progress").style.visibility = "hidden";
         document.getElementById("error").style.visibility = "visible";
         $('#error').html("<h4 style=\"color:red\">Pick a date from today onwards</div>");
         return
       }
       document.getElementById("error").style.visibility = "hidden";
       $('#title_booking').text("All bookings on " + $('#date').val())
-      $("#results").fadeIn(2000);
     }
 
     $.ajax({
@@ -85,7 +87,8 @@ function makeTable(json){
     }
     table += "</tbody>"
     $('#booking_results').append(table);
-
+    document.getElementById("progress").style.visibility = "hidden";
+    $("#results").fadeIn(2000);
   }
 
 

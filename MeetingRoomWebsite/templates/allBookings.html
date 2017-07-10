@@ -14,13 +14,55 @@
 {% block content %}
 <body>
   <main>
-    <form action="{% url 'allBookings' username %}" method="POST" id="post-form">{% csrf_token %}
+    <form id="post-form">{% csrf_token %}
       <label><b>Date</b></label>
       <input type="date" class="datepicker" name="date" id="date" required>
       <a href="#!" class="btn" onclick="start();">Get Bookings</a>
       <input type="text" id="name" style="visibility:hidden" value="{{username}}">
       <div id="error"></div>
     </form>
+    <div id="progress" style="visibility:hidden;margin:auto;width:50%">
+      <div class="preloader-wrapper big active">
+          <div class="spinner-layer spinner-blue">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+          <div class="spinner-layer spinner-red">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+
+          <div class="spinner-layer spinner-yellow">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+
+          <div class="spinner-layer spinner-green">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+    </div>
   <div id="results" style="visibility: hidden;">
     <h3 id="title_booking">All bookings on </h3>
     <table id="booking_results" class="bordered responsive-table centered">
