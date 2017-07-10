@@ -14,7 +14,6 @@ function create_post(outside,username) {
       var date = today.getFullYear() + "-" + mm + "-" + dd;
       document.getElementById("error").style.visibility = "hidden";
       $('#title_booking').text("All Avaiable Bookings for Today");
-      $("#results").fadeIn(2000);
     }
     else{
       var today = new Date();
@@ -31,7 +30,7 @@ function create_post(outside,username) {
       }
       document.getElementById("error").style.visibility = "hidden";
       $('#title_booking').text("All Available Bookings on " + $('#date').val())
-      $("#results").fadeIn(2000);
+
     }
 
     $.ajax({
@@ -130,6 +129,7 @@ function makeTable(json,outside){
   script = "<script>" + script1 +" " + script2 + "</script>"
   $('#script').append(script);
   document.getElementById("progress").style.visibility = "hidden";
+  $("#results").fadeIn(2000);
 
 }
 
