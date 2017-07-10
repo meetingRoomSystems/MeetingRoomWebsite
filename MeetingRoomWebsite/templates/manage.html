@@ -57,12 +57,14 @@
 {% endblock content %}
 
 {% block javascript %}
-{% if deleted %}
-<script>
-  window.onload = function(){
-    Materialize.toast('{{deleted}}', 4000,'rounded')
-  }
 
+<script>
+  window.onload = function(){    
+    display_ct();
+    {% if deleted %}
+    Materialize.toast('{{deleted}}', 4000,'rounded')
+    {% endif %}
+  }
 </script>
-{% endif %}
+
 {% endblock javascript %}

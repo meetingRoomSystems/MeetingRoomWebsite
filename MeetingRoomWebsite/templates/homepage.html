@@ -96,6 +96,7 @@
 {% if message %}
 <script>
   window.onload = function(){
+    display_ct();
     Materialize.toast('{{message}}', 4000,'rounded')
   }
 

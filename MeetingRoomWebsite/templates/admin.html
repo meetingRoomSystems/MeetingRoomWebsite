@@ -67,6 +67,7 @@
 
 <script>
   window.onload = function(){
+    display_ct();
     {% if updated != '' %}
     Materialize.toast('{{updated}}', 4000,'rounded')
     {% endif %}
