@@ -1,4 +1,5 @@
 function start(){
+  document.getElementById("progress").style.visibility = "visible";
   create_post('no',$('#name').val());
 
 }
@@ -128,6 +129,7 @@ function makeTable(json,outside){
   script2 += "}"
   script = "<script>" + script1 +" " + script2 + "</script>"
   $('#script').append(script);
+  document.getElementById("progress").style.visibility = "hidden";
 
 }
 
