@@ -285,6 +285,9 @@ def makeBooking(request,username,room,date,time):
     if(checkIfMade == 1):
         request.session['message'] = "Booking has been made"
         return redirect(homepage,username=username)
+    else:
+        request.session['message'] = "Booking has not been made. Try again later"
+        return redirect(homepage,username=username)
 
 def allBookings(request,username):
     try:
