@@ -1,0 +1,22 @@
+body{
+  /*background-color: #ef9a9a;*/
+  background-image: url("../background.jpg");
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+main {
+    padding-left: 100px;
+    padding-right: 100px;
+    flex: 1 0 auto;
+  }
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+      padding-left: 0;
+    }
+}
+#datetime{
+  position:absolute;
+  top:0;
+  right:0;
+}

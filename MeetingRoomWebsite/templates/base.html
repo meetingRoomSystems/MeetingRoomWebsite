@@ -8,49 +8,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-    <style>
-      body{
-        /*background-color: #ef9a9a;*/
-        background-image: url("{% static 'background.jpg' %}");
-        display: flex;
-        min-height: 100vh;
-        flex-direction: column;
-      }
-      main {
-          padding-left: 100px;
-          padding-right: 100px;
-          flex: 1 0 auto;
-        }
-      @media only screen and (max-width : 992px) {
-          header, main, footer {
-            padding-left: 0;
-          }
-      }
-      #datetime{
-        position:absolute;
-        top:0;
-        right:0;
-      }
-    </style>
+    <script type="text/javascript" src="{% static 'js/realDateTime.js' %}"></script>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon"/>
     {% block style %}
     {% endblock style %}
 
-    <script type="text/javascript">
-      function display_c(){
-      var refresh=1000; // Refresh rate in milli seconds
-      mytime=setTimeout('display_ct()',refresh)
-      }
-      function display_ct() {
-      var strcount;
-      var x = new Date();
-      var x1= x.getDate() + "/" + x.getMonth() + "/" +  x.getFullYear();
-      x1 = x1 + " - " + x.getHours( )+ ":" + x.getMinutes() + ":" + x.getSeconds();
-      document.getElementById('ct').innerHTML = x1;
-      tt=display_c();
-      }
-    </script>
   </head>
 
   <body onload=display_ct();>
@@ -75,7 +40,7 @@
     <a href="#" data-activates="slide-out" class="button-collapse"><font color="#ef9a9a"><i class="medium material-icons">menu</i></font></a>
     <div id="datetime">
       <h6 style="float:left;font-size:20px">Date and time:</h6>
-      <span id='ct' ></span>
+      <span id='ct'></span>
     </div>
     {% block content %}
     {% endblock content %}
