@@ -14,53 +14,57 @@
 <main>
   <h3>All Bookings</h3>
   <h5>Admin is only allowed to change the room of a booking. The timing and date cannot be changed.</h5>
-  <table class="bordered responsive-table centered">
-     <thead>
-       <tr>
-           <th>By</th>
-           <th>Date</th>
-           <th>Time</th>
-           <th>People</th>
-           <th>Room</th>
-           <th>Change to room:</th>
-       </tr>
-     </thead>
-     <tbody>
-       {% if bookings != '[]' %}
-       {% for book in bookings %}
-       <tr>
-         <td>{{book.fullname}}
-         <td>{{book.booking_date}}</td>
-         <td>{{book.booking_time}}</td>
-         <td>{{book.capacity}}</td>
-         <td>Room {{book.room}}</td>
-         <td>
-           <div>
-             {% if '1' in book.availabeRooms and book.capacity < 11 %}
-             <a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_time book.room '1'  %}">1</a>
-             {% endif %}
-             {% if '2' in book.availabeRooms and book.capacity < 16 %}
-             <a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_time book.room '2'  %}">2</a>
-             {% endif %}
-             {% if '3' in book.availabeRooms and book.capacity < 6 %}
-             <a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_time book.room '3'  %}">3</a>
-             {% endif %}
-             {% if '4' in book.availabeRooms and book.capacity < 21 %}
-             <a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_time book.room '4'  %}">4</a>
-             {% endif %}
-           </div>
-       </tr>
-       {% endfor %}
-       {% else %}
-       <tr>
-         <td colspan="6" style="font-size:20px">No bookings availabe to manage</td>
-        </tr>
-       {% endif %}
-     </tbody>
-   </table>
+  <div class="row">
+    {% if bookings != '[]' %}
+    {% for book in bookings %}
+        <div class="col s12 m6">
+          <div class="card blue-grey darken-1 hoverable z-depth-5">
+            <div class="card-content white-text">
+              <p><b>By</b> : {{book.fullname}} <br><b>Date</b> : {{book.booking_date}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}} ({{book.duration}} mins)<br><b>Room</b> : {{book.room}}<br>Meeting is with {{book.capacity}} people</p>
+            </div>
+            <div class="card-action white-text">
+              <p>Change to room...</p>
+              {% if '1' in book.availabeRooms and book.capacity < 11 %}
+              <a class="waves-effect waves-light btn-large z-depth-5" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '1'  %}">1</a>
+              {% else %}
+              <a class="waves-effect waves-light btn-large disabled" style="width:auto;">1</a>
+              {% endif %}
+              {% if '2' in book.availabeRooms and book.capacity < 16 %}
+              <a class="waves-effect waves-light btn-large z-depth-5" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '2'  %}">2</a>
+              {% else %}
+              <a class="waves-effect waves-light btn-large disabled" style="width:auto;">2</a>
+              {% endif %}
+              {% if '3' in book.availabeRooms and book.capacity < 6 %}
+              <a class="waves-effect waves-light btn-large z-depth-5" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '3'  %}">3</a>
+              {% else %}
+              <a class="waves-effect waves-light btn-large disabled" style="width:auto;">3</a>
+              {% endif %}
+              {% if '4' in book.availabeRooms and book.capacity < 21 %}
+              <a class="waves-effect waves-light btn-large z-depth-5" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '4'  %}">4</a>
+              {% else %}
+              <a class="waves-effect waves-light btn-large disabled" style="width:auto;">4</a>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h4 style="font-size:30px">No bookings availabe to edit</h4>
+        {% endif %}
+      </div>
+   <br><br>
+   <h3>Total bookings for each user</h3>
+   <div class="collection">
+     {% for bookCount in bookingCount %}
+    <a class="collection-item"><span class="badge">{{bookCount.count}}</span>{{bookCount.username}}</a>
+    {% endfor %}
+  </div>
+   <br><br>
+   <a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'deleteOld' username %}">Delete Old Bookings</a>
  </main>
  <br><br><br>
- <a class="waves-effect waves-light btn-large" style="width:auto;" href="{% url 'deleteOld' username %}">Delete Old Bookings</a>
+
 {% endblock content %}
 
 {% block javascript %}

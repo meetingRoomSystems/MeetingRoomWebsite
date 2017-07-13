@@ -8,7 +8,6 @@ function create_post(outside,username) {
     var urlLink = "/"+username + "/all";
     if(outside == 'yes'){
       var today = new Date();
-      console.log(today);
       var mm = (today.getMonth()+1 > 9 ? '' : '0') + (today.getMonth()+1);
       var dd= (today.getDate() > 9 ? '' : '0') + today.getDate();
       var date = today.getFullYear() + "-" + mm + "-" + dd;
@@ -17,12 +16,9 @@ function create_post(outside,username) {
 
     }
     else{
-      console.log($('#date').val())
       var today = new Date();
       today.setHours(0,0,0,0)
       var d = new Date($('#date').val());
-      console.log(today);
-      console.log(d);
       var mm = (d.getMonth()+1 > 9 ? '' : '0') + (d.getMonth()+1);
       var dd= (d.getDate() > 9 ? '' : '0') + d.getDate();
       var date = d.getFullYear() + "-" + mm + "-" + dd;
@@ -34,7 +30,12 @@ function create_post(outside,username) {
         return
       }
       document.getElementById("error").style.visibility = "hidden";
-      $('#title_booking').text("All bookings on " + $('#date').val())
+      if(today.getTime() === d.getTime()){
+        $('#title_booking').text("All Bookings for Today")
+      }
+      else{
+        $('#title_booking').text("All Bookings on " + $('#date').val())
+      }
     }
 
     $.ajax({
@@ -62,31 +63,33 @@ function create_post(outside,username) {
 function makeTable(json){
   console.log(json.bookings)
   var response;
-  $("tr:has(td)").remove();
+  var content = '';
+  $("#booking_results").text('');
+
   if(json.bookings == "[]"){
-    table +="<tr><td colspan=\"5\" style=\"font-size:20px\">No Bookings for any rooms</td></tr></tbody>"
-    $('#booking_results').append(table);
+    content +="<h4 style=\"font-size:30px\">No Bookings for any rooms</h4>"
+    $('#booking_results').append(content);
+    document.getElementById("progress").style.visibility = "hidden";
+    $("#results").fadeIn(2000);
   }
   else{
-    var table;
     for (i = 0; i < json.bookings.length; i++) {
       response = json.bookings[i];
       if(response.room == "1"){
-        table += "<tr><td>" + response.fullname + "</td>" + "<td>" + response.booking_date + "</td>" + "<td>" + response.booking_time + "</td>" + "<td>" + response.capacity + "</td>" + "<td>Room " + response.room + " <img class=\"middle\" width= \"300\" src=\"../static/room1.jpg\"></td></tr>"
+        content += "<div class=\"col s12 m6\"><div class=\"card horizontal hoverable z-depth-5\"><div class=\"card-image\"><img src=\"../static/room1.jpg\"></div><div class=\"card-stacked\"><div class=\"card-content\"><p><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start  + " - " + response.booking_end + " ( " + response.duration + " mins )<br><b>Room</b> : "+ response.room + "<br>Meeting is with " + response.capacity +" people</p></div></div></div></div>"
       }
       else if(response.room == "2"){
-        table += "<tr><td>" + response.fullname + "</td>" + "<td>" + response.booking_date + "</td>" + "<td>" + response.booking_time + "</td>" + "<td>" + response.capacity + "</td>" + "<td>Room " + response.room + " <img class=\"middle\" width= \"300\" src=\"../static/room2.jpg\"></td></tr>"
+        content += "<div class=\"col s12 m6\"><div class=\"card horizontal hoverable z-depth-5\"><div class=\"card-image\"><img src=\"../static/room2.jpg\"></div><div class=\"card-stacked\"><div class=\"card-content\"><p><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start  + " - " + response.booking_end + " ( " + response.duration + " mins )<br><b>Room</b> : "+ response.room + "<br>Meeting is with " + response.capacity +" people</p></div></div></div></div>"
       }
       else if(response.room == "3"){
-        table += "<tr><td>" + response.fullname + "</td>" + "<td>" + response.booking_date + "</td>" + "<td>" + response.booking_time + "</td>" + "<td>" + response.capacity + "</td>" + "<td>Room " + response.room + " <img class=\"middle\" width= \"300\" src=\"../static/room3.jpg\"></td></tr>"
+        content += "<div class=\"col s12 m6\"><div class=\"card horizontal hoverable z-depth-5\"><div class=\"card-image\"><img src=\"../static/room3.jpg\"></div><div class=\"card-stacked\"><div class=\"card-content\"><p><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start  + " - " + response.booking_end + " ( " + response.duration + " mins )<br><b>Room</b> : "+ response.room + "<br>Meeting is with " + response.capacity +" people</p></div></div></div></div>"
       }
       else if(response.room == "4"){
-        table += "<tr><td>" + response.fullname + "</td>" + "<td>" + response.booking_date + "</td>" + "<td>" + response.booking_time + "</td>" + "<td>" + response.capacity + "</td>" + "<td>Room " + response.room + " <img class=\"middle\" width= \"300\" src=\"../static/room4.jpg\"></td></tr>"
+        content += "<div class=\"col s12 m6\"><div class=\"card horizontal hoverable z-depth-5\"><div class=\"card-image\"><img src=\"../static/room4.jpg\"></div><div class=\"card-stacked\"><div class=\"card-content\"><p><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start  + " - " + response.booking_end + " ( " + response.duration + " mins )<br><b>Room</b> : "+ response.room + "<br>Meeting is with " + response.capacity +" people</p></div></div></div></div>"
       }
 
     }
-    table += "</tbody>"
-    $('#booking_results').append(table);
+    $('#booking_results').append(content);
     document.getElementById("progress").style.visibility = "hidden";
     $("#results").fadeIn(2000);
   }
