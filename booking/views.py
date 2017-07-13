@@ -20,7 +20,7 @@ def login(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-    loginURL = 'http://localhost:3000/compulynx/login.php?username={}&user_password={}'.format(username,password)
+    loginURL = 'https://compulynxmeetingrooms.000webhostapp.com/login.php?username={}&user_password={}'.format(username,password)
     loginResults =  json.loads(requests.get(loginURL).text)
     successCode = loginResults['success']
     if(successCode == 1):
@@ -60,7 +60,7 @@ def register(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             fullname = form.cleaned_data['fullname']
-    loginURL = 'http://localhost:3000/compulynx/register.php?fullname={}&username={}&user_password={}'.format(fullname,username,password)
+    loginURL = 'https://compulynxmeetingrooms.000webhostapp.com/register.php?fullname={}&username={}&user_password={}'.format(fullname,username,password)
     loginResults =  json.loads(requests.get(loginURL).text)
     successCode = loginResults['success']
     if(successCode == 1):
@@ -82,7 +82,7 @@ def logOutAll(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-    loginURL = 'http://localhost:3000/compulynx/login.php?username={}&user_password={}'.format(username,password)
+    loginURL = 'https://compulynxmeetingrooms.000webhostapp.com/login.php?username={}&user_password={}'.format(username,password)
     loginResults =  json.loads(requests.get(loginURL).text)
     successCode = loginResults['success']
     if(successCode == 1):
@@ -125,12 +125,12 @@ def homepage(request,username):
               'visibility':'hidden',
           })
 
-    upcomingURL = 'http://localhost:3000/compulynx/getbooking.php?username={}'.format(username)
+    upcomingURL = 'https://compulynxmeetingrooms.000webhostapp.com/getbooking.php?username={}'.format(username)
     upcomingResults =  json.loads(requests.get(upcomingURL).text)
 
     upcomingBookings = upcomingResults['bookings']
 
-    allBookingURL = 'http://localhost:3000/compulynx/getbooking.php?booking_date={}'.format(datetime.datetime.today().strftime('%Y-%m-%d'))
+    allBookingURL = 'https://compulynxmeetingrooms.000webhostapp.com/getbooking.php?booking_date={}'.format(datetime.datetime.today().strftime('%Y-%m-%d'))
     allBookingResults =  json.loads(requests.get(allBookingURL).text)
     allBookings = allBookingResults['bookings']
     if request.session.has_key('message'):
@@ -237,7 +237,7 @@ def newBooking(request,username):
                 'role' : role,
             })
         else:
-            allBookingURL = 'http://localhost:3000/compulynx/getbooking.php?booking_date={}&room=0'.format(date)
+            allBookingURL = 'https://compulynxmeetingrooms.000webhostapp.com/getbooking.php?booking_date={}&room=0'.format(date)
             allBookingResults =  json.loads(requests.get(allBookingURL).text)
 
             allTimings = ["08:00:00","08:30:00","09:00:00","09:30:00","10:00:00","10:30:00","11:00:00","11:30:00","12:00:00","12:30:00","13:00:00","13:30:00","14:00:00","14:30:00","15:00:00","15:30:00","16:00:00", "16:30:00", "17:00:00","17:30:00"]
@@ -304,7 +304,7 @@ def makeBooking(request,username,room,date,time):
     print(duration)
     date = date[0:4] + '-' + date[4:6] + '-' + date[6:]
     time = time[0:2]+ ":" + time[2:4] + ":" + time[4:]
-    makeBookingURL = 'http://localhost:3000/compulynx/setbooking.php?fullname={}&username={}&capacity={}&room={}&booking_date={}&booking_time={}&length={}'.format(fullname,username,capacity,room,date,time,duration)
+    makeBookingURL = 'https://compulynxmeetingrooms.000webhostapp.com/setbooking.php?fullname={}&username={}&capacity={}&room={}&booking_date={}&booking_time={}&length={}'.format(fullname,username,capacity,room,date,time,duration)
     print(makeBookingURL)
     makeBookingResults =  json.loads(requests.get(makeBookingURL).text)
     checkIfMade = makeBookingResults['success']
@@ -350,7 +350,7 @@ def allBookings(request,username):
                 'role' : role,
             })
         else:
-            allBookingURL = 'http://localhost:3000/compulynx/getbooking.php?booking_date={}'.format(date)
+            allBookingURL = 'https://compulynxmeetingrooms.000webhostapp.com/getbooking.php?booking_date={}'.format(date)
             allBookingResults =  json.loads(requests.get(allBookingURL).text)
             allBookings = allBookingResults['bookings']
             response_data = {"bookings":allBookings}
@@ -387,12 +387,12 @@ def adminSettings(request,username):
               'visibility':'hidden',
           })
 
-    allBookingURL = 'http://localhost:3000/compulynx/getbooking.php?all=1'
+    allBookingURL = 'https://compulynxmeetingrooms.000webhostapp.com/getbooking.php?all=1'
     allBookingResults =  json.loads(requests.get(allBookingURL).text)
     allBookings = allBookingResults['bookings']
     results = []
     for book in allBookings:
-        availableRoomsURL = 'http://localhost:3000/compulynx/getbooking.php?booking_date={}&booking_time={}&room={}'.format(book['booking_date'],book['booking_start'],book['room'])
+        availableRoomsURL = 'https://compulynxmeetingrooms.000webhostapp.com/getbooking.php?booking_date={}&booking_time={}&room={}'.format(book['booking_date'],book['booking_start'],book['room'])
         availableRoomsResults =  json.loads(requests.get(availableRoomsURL).text)
         if(availableRoomsResults['success'] == 1):
             rooms = availableRoomsResults['rooms']
@@ -405,7 +405,7 @@ def adminSettings(request,username):
         print(availableRooms)
         bookingDetails = {'username':book['username'],'fullname':book['fullname'],'booking_date':book['booking_date'],'booking_start':book['booking_start'],'booking_end':book['booking_end'],'room':book['room'],'capacity':int(book['capacity']),'availabeRooms':availableRooms}
         results.append(bookingDetails)
-    bookingCountURL = 'http://localhost:3000/compulynx/getNumberOfBookings.php'
+    bookingCountURL = 'https://compulynxmeetingrooms.000webhostapp.com/getNumberOfBookings.php'
     bookingCountResults = json.loads(requests.get(bookingCountURL).text)
     bookingCount = bookingCountResults['results']
     updated = ''
@@ -446,7 +446,7 @@ def changeRoom(request,admin,username,date,time,oldroom,newroom):
               'errorMessage' : 'Please Log in first',
               'visibility':'hidden',
           })
-    changeURL = 'http://localhost:3000/compulynx/updatebooking.php?old_booking_date={}&old_booking_time={}&old_room={}&new_room={}&username={}&type=1'.format(date,time,oldroom,newroom,username)
+    changeURL = 'https://compulynxmeetingrooms.000webhostapp.com/updatebooking.php?old_booking_date={}&old_booking_time={}&old_room={}&new_room={}&username={}&type=1'.format(date,time,oldroom,newroom,username)
     changeResults =  json.loads(requests.get(changeURL).text)
     print(changeURL)
     if(changeResults['success'] == 1):
@@ -473,7 +473,7 @@ def manage(request,username):
               'visibility':'hidden',
           })
 
-    upcomingURL = 'http://localhost:3000/compulynx/getbooking.php?username={}'.format(username)
+    upcomingURL = 'https://compulynxmeetingrooms.000webhostapp.com/getbooking.php?username={}'.format(username)
     upcomingResults =  json.loads(requests.get(upcomingURL).text)
     upcomingBookings = upcomingResults['bookings']
     if request.session.has_key('deleted'):
@@ -511,7 +511,7 @@ def delete(request,username,date,time,room):
               'errorMessage' : 'Please Log in first',
               'visibility':'hidden',
           })
-    deleteURL = 'http://localhost:3000/compulynx/cancelbooking.php?username={}&room={}&booking_date={}&booking_time={}'.format(username,room,date,time)
+    deleteURL = 'https://compulynxmeetingrooms.000webhostapp.com/cancelbooking.php?username={}&room={}&booking_date={}&booking_time={}'.format(username,room,date,time)
     deleteResults =  json.loads(requests.get(deleteURL).text)
     if(deleteResults['success'] == 1):
         request.session['deleted'] = "Booking Deleted"
@@ -564,7 +564,7 @@ def deleteOld(request,username):
               'visibility':'hidden',
           })
 
-    deleteURL = 'http://localhost:3000/compulynx/deleteOldBooking.php?username={}'.format(username)
+    deleteURL = 'https://compulynxmeetingrooms.000webhostapp.com/deleteOldBooking.php?username={}'.format(username)
     deleteResults =  json.loads(requests.get(deleteURL).text)
     if(deleteResults['success'] == 1):
         request.session['deleted'] = "Old Bookings Deleted"
