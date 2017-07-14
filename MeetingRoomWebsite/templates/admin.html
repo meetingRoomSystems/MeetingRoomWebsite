@@ -15,7 +15,7 @@
   <h3>All Bookings</h3>
   <h5>Admin is only allowed to change the room of a booking. The timing and date cannot be changed.</h5>
   <div class="row">
-    {% if bookings != '[]' %}
+    {% if bookings %}
     {% for book in bookings %}
         <div class="col s12 m6">
           <div class="card blue-grey darken-1 hoverable z-depth-5">
@@ -50,7 +50,10 @@
         </div>
         {% endfor %}
         {% else %}
-        <h4 style="font-size:30px">No bookings availabe to edit</h4>
+        <div class="card-panel red lighten-1 hoverable">
+            <span class="white-text"><b>No Bookings available for editing</b></span>
+        </div>
+
         {% endif %}
       </div>
    <br><br>

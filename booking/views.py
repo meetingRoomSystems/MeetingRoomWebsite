@@ -137,15 +137,17 @@ def homepage(request,username):
     rm2 = []
     rm3 = []
     rm4 = []
-    for booking in allBookings:
-        if booking['room'] == '1':
-            rm1.append(booking)
-        elif booking['room'] == '2':
-            rm2.append(booking)
-        elif booking['room'] == '3':
-            rm3.append(booking)
-        elif booking['room'] == '4':
-            rm4.append(booking)
+
+    if allBookings != '[]':
+        for booking in allBookings:
+            if booking['room'] == '1':
+                rm1.append(booking)
+            elif booking['room'] == '2':
+                rm2.append(booking)
+            elif booking['room'] == '3':
+                rm3.append(booking)
+            elif booking['room'] == '4':
+                rm4.append(booking)
 
     if request.session.has_key('message'):
         message = request.session['message']
@@ -383,15 +385,16 @@ def allBookings(request,username):
             rm2 = []
             rm3 = []
             rm4 = []
-            for booking in allBookings:
-                if booking['room'] == '1':
-                    rm1.append(booking)
-                elif booking['room'] == '2':
-                    rm2.append(booking)
-                elif booking['room'] == '3':
-                    rm3.append(booking)
-                elif booking['room'] == '4':
-                    rm4.append(booking)
+            if allBookings != '[]':
+                for booking in allBookings:
+                    if booking['room'] == '1':
+                        rm1.append(booking)
+                    elif booking['room'] == '2':
+                        rm2.append(booking)
+                    elif booking['room'] == '3':
+                        rm3.append(booking)
+                    elif booking['room'] == '4':
+                        rm4.append(booking)
             response_data = {"rm1":rm1,"rm2":rm2,"rm3":rm3,"rm4":rm4}
 
             return HttpResponse(
@@ -430,20 +433,21 @@ def adminSettings(request,username):
     allBookingResults =  json.loads(requests.get(allBookingURL).text)
     allBookings = allBookingResults['bookings']
     results = []
-    for book in allBookings:
-        availableRoomsURL = 'https://compulynxmeetingrooms.000webhostapp.com/getbooking.php?booking_date={}&booking_time={}&room={}'.format(book['booking_date'],book['booking_start'],book['room'])
-        availableRoomsResults =  json.loads(requests.get(availableRoomsURL).text)
-        if(availableRoomsResults['success'] == 1):
-            rooms = availableRoomsResults['rooms']
-            if(isinstance(rooms, list)):
-                availableRooms = rooms
+    if allBookingResults['bookings'] != '[]':
+        for book in allBookings:
+            availableRoomsURL = 'https://compulynxmeetingrooms.000webhostapp.com/getbooking.php?booking_date={}&booking_time={}&room={}'.format(book['booking_date'],book['booking_start'],book['room'])
+            availableRoomsResults =  json.loads(requests.get(availableRoomsURL).text)
+            if(availableRoomsResults['success'] == 1):
+                rooms = availableRoomsResults['rooms']
+                if(isinstance(rooms, list)):
+                    availableRooms = rooms
+                else:
+                    availableRooms = list(rooms.values())
             else:
-                availableRooms = list(rooms.values())
-        else:
-            availableRooms = ['1','2','3','4']
-        print(availableRooms)
-        bookingDetails = {'username':book['username'],'fullname':book['fullname'],'booking_date':book['booking_date'],'booking_start':book['booking_start'],'booking_end':book['booking_end'],'room':book['room'],'capacity':int(book['capacity']),'availabeRooms':availableRooms}
-        results.append(bookingDetails)
+                availableRooms = ['1','2','3','4']
+            print(availableRooms)
+            bookingDetails = {'username':book['username'],'fullname':book['fullname'],'booking_date':book['booking_date'],'booking_start':book['booking_start'],'booking_end':book['booking_end'],'room':book['room'],'capacity':int(book['capacity']),'availabeRooms':availableRooms}
+            results.append(bookingDetails)
     bookingCountURL = 'https://compulynxmeetingrooms.000webhostapp.com/getNumberOfBookings.php'
     bookingCountResults = json.loads(requests.get(bookingCountURL).text)
     bookingCount = bookingCountResults['results']
