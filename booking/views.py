@@ -133,6 +133,20 @@ def homepage(request,username):
     allBookingURL = 'https://compulynxmeetingrooms.000webhostapp.com/getbooking.php?booking_date={}'.format(datetime.datetime.today().strftime('%Y-%m-%d'))
     allBookingResults =  json.loads(requests.get(allBookingURL).text)
     allBookings = allBookingResults['bookings']
+    rm1 = []
+    rm2 = []
+    rm3 = []
+    rm4 = []
+    for booking in allBookings:
+        if booking['room'] == '1':
+            rm1.append(booking)
+        elif booking['room'] == '2':
+            rm2.append(booking)
+        elif booking['room'] == '3':
+            rm3.append(booking)
+        elif booking['room'] == '4':
+            rm4.append(booking)
+
     if request.session.has_key('message'):
         message = request.session['message']
         del request.session['message']
@@ -143,7 +157,10 @@ def homepage(request,username):
                 'fullname':fullname.title(),
                 'username':username,
                 'bookings':upcomingBookings,
-                'allBookings':allBookings,
+                'rm1':rm1,
+                'rm2':rm2,
+                'rm3':rm3,
+                'rm4':rm4,
                 'message': message,
                 'role' : role,
                 'deleted':deleted,
@@ -153,7 +170,10 @@ def homepage(request,username):
                 'fullname':fullname.title(),
                 'username':username,
                 'bookings':upcomingBookings,
-                'allBookings':allBookings,
+                'rm1':rm1,
+                'rm2':rm2,
+                'rm3':rm3,
+                'rm4':rm4,
                 'message': message,
                 'role' : role,
             })
@@ -165,7 +185,10 @@ def homepage(request,username):
                 'fullname':fullname.title(),
                 'username':username,
                 'bookings':upcomingBookings,
-                'allBookings':allBookings,
+                'rm1':rm1,
+                'rm2':rm2,
+                'rm3':rm3,
+                'rm4':rm4,
                 'role' : role,
                 'deleted':deleted,
             })
@@ -174,7 +197,10 @@ def homepage(request,username):
                 'fullname':fullname.title(),
                 'username':username,
                 'bookings':upcomingBookings,
-                'allBookings':allBookings,
+                'rm1':rm1,
+                'rm2':rm2,
+                'rm3':rm3,
+                'rm4':rm4,
                 'role' : role,
              })
 
@@ -353,7 +379,20 @@ def allBookings(request,username):
             allBookingURL = 'https://compulynxmeetingrooms.000webhostapp.com/getbooking.php?booking_date={}'.format(date)
             allBookingResults =  json.loads(requests.get(allBookingURL).text)
             allBookings = allBookingResults['bookings']
-            response_data = {"bookings":allBookings}
+            rm1 = []
+            rm2 = []
+            rm3 = []
+            rm4 = []
+            for booking in allBookings:
+                if booking['room'] == '1':
+                    rm1.append(booking)
+                elif booking['room'] == '2':
+                    rm2.append(booking)
+                elif booking['room'] == '3':
+                    rm3.append(booking)
+                elif booking['room'] == '4':
+                    rm4.append(booking)
+            response_data = {"rm1":rm1,"rm2":rm2,"rm3":rm3,"rm4":rm4}
 
             return HttpResponse(
                 json.dumps(response_data),
@@ -567,8 +606,8 @@ def deleteOld(request,username):
     deleteURL = 'https://compulynxmeetingrooms.000webhostapp.com/deleteOldBooking.php?username={}'.format(username)
     deleteResults =  json.loads(requests.get(deleteURL).text)
     if(deleteResults['success'] == 1):
-        request.session['deleted'] = "Old Bookings Deleted"
-        return redirect(manage,username=username)
+        request.session['deleteOld'] = "Old Bookings Deleted"
+        return redirect(adminSettings,username=username)
     else:
-        request.session['deleted'] = "Unable to delete old bookings. Try again later"
-        return redirect(manage,username=username) # Change later
+        request.session['deleteOld'] = "Unable to delete old bookings. Try again later"
+        return redirect(adminSettings,username=username) # Change later

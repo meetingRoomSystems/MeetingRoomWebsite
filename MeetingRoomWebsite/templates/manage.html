@@ -12,8 +12,6 @@
 
 {% block content %}
 <main>
-  <h2>Welcome {{fullname}}</h2>
-  <br>
   <h3>All your bookings.</h3>
   <div class="row" >
     {% if bookings != '[]' %}
@@ -39,7 +37,11 @@
      </div>
      {% endfor %}
      {% else %}
-     <h4 style="font-size:30px">No Upcoming Bookings</h4>
+     <div class="col s12 m3">
+         <div class="card-panel red hoverable">
+             <span class="white-text"><b>No Upcoming Bookings</b></span>
+         </div>
+     </div>
      {% endif %}
  </div>
  </main>

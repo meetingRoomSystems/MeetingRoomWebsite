@@ -1,8 +1,13 @@
 function start_2(){
+  if($('#date').val() == ''){
+    create_post_2('yes',$('#name').val());
+  }
+  else{
     $("#results").fadeOut(50);
     document.getElementById("progress").style.visibility = "visible";
     create_post_2('no',$('#name').val());
-}
+  }
+};
 
 function create_post_2(outside,username) {
     var urlLink = "/"+username + "/new/";
@@ -77,6 +82,8 @@ function makeTable_2(json,outside){
   var mm = (d.getMonth()+1 > 9 ? '' : '0') + (d.getMonth()+1);
   var dd= (d.getDate() > 9 ? '' : '0') + d.getDate();
   var date = d.getFullYear()+ mm + dd;
+  var displaydate = dd + '-' + mm + '-' + d.getFullYear();
+
   $('#l1').text('');
   $('#l2').text('');
   $('#l3').text('');
@@ -107,43 +114,44 @@ function makeTable_2(json,outside){
       }
     }
   }
+
   var arrayLength = allTimings.length;
   for (var i = 0; i < arrayLength; i++) {
       if(availableRoom1.includes(allTimings[i])){
-        textRoom1 += "<li class=\"list\"><a class=\"available\" onclick=\"document.getElementById('" +allTimings[i]+ "_1').style.display='block'\">" + allTimings[i] + "</a></li>";
-        popups += "<div id=\""+ allTimings[i] + "_1\" class=\"modal_form\"><form class=\"modal-content animate\" action=\"/"+$('#name').val()+"/new/1/" +date+"/"+allTimings[i].replace(/:/g , "") + "\" method=\"get\"><div class=\"container\"><p>You are about to make a booking on " + $('#date').val() +" at "+ allTimings[i] +" in Room 1. Enter the number of people below and press confirm to make the booking</p><label><b>Duration (in minutes)</b></label><p><input name=\"duration\" type=\"radio\" id=\"30\" value=\"30\"><label for=\"30\">30</label></p><p><input name=\"duration\" value=\"60\" type=\"radio\" id=\"60\"><label for=\"60\">60</label></p><p><input name=\"duration\" value=\"90\" type=\"radio\" id=\"90\"><label for=\"90\">90</label></p><br><label><b>Number of people</b></label><input type=\"number\" placeholder=\"Enter Number of people\" min=\"1\" max=\"10\" name=\"capacity\" required><button type=\"submit\">Confirm</button></div><div class=\"container\"><button type=\"button\" onclick=\"document.getElementById('"+ allTimings[i] +"_1').style.display='none'\" class=\"cancelbtn\">Cancel</button></div></form></div>"
+        textRoom1 += "<li class=\"list\"><a class=\"available green accent-3\" onclick=\"document.getElementById('" +allTimings[i]+ "_1').style.display='block'\">" + allTimings[i] + "</a></li>";
+        popups += "<div id=\""+ allTimings[i] + "_1\" class=\"modal_form\"><form class=\"modal-content animate\" action=\"/"+$('#name').val()+"/new/1/" +date+"/"+allTimings[i].replace(/:/g , "") + "\" method=\"get\"><div class=\"container\"><p>You are about to make a booking on " + displaydate +" at "+ allTimings[i] +" in Room 1. Enter the number of people below and press confirm to make the booking</p><label><b>Duration (in minutes)</b></label><p><input name=\"duration\" type=\"radio\" id=\"rm1_30\" value=\"30\"><label for=\"rm1_30\">30</label></p><p><input name=\"duration\" value=\"60\" type=\"radio\" id=\"rm1_60\"><label for=\"rm1_60\">60</label></p><p><input name=\"duration\" value=\"90\" type=\"radio\" id=\"rm1_90\"><label for=\"rm1_90\">90</label></p><br><label><b>Number of people</b></label><input type=\"number\" placeholder=\"Enter Number of people (max 10)\" min=\"1\" max=\"10\" name=\"capacity\" required><button type=\"submit\">Confirm</button></div><div class=\"container\"><button type=\"button\" onclick=\"document.getElementById('"+ allTimings[i] +"_1').style.display='none'\" class=\"cancelbtn\">Cancel</button></div></form></div>"
         script1 += "var one_" + i +" = document.getElementById(\""+allTimings[i]+"_1\");"
         script2 += "if (event.target == one_" + i + ") { one_" + i + ".style.display = \"none\"};"
       }
       else{
-        textRoom1 += "<li class=\"list\"><a class=\"busy\">" + allTimings[i] + "</a></li>";
+        textRoom1 += "<li class=\"list\"><a class=\"busy red lighten-1\">" + allTimings[i] + "</a></li>";
       }
       if(availableRoom2.includes(allTimings[i])){
-        textRoom2 += "<li class=\"list\"><a class=\"available\" onclick=\"document.getElementById('" +allTimings[i]+ "_2').style.display='block'\">"  + allTimings[i] + "</a></li>";
-        popups += "<div id=\""+ allTimings[i] + "_2\" class=\"modal_form\"><form class=\"modal-content animate\" action=\"/"+$('#name').val()+"/new/2/" +date+"/"+allTimings[i].replace(/:/g , "") + "\" method=\"get\"><div class=\"container\"><p>You are about to make a booking on " + $('#date').val() +" at "+ allTimings[i] +" in Room 2. Enter the number of people below and press confirm to make the booking</p><label><b>Duration (in minutes)</b></label><p><input name=\"duration\" type=\"radio\" id=\"30\" value=\"30\"><label for=\"30\">30</label></p><p><input name=\"duration\" value=\"60\" type=\"radio\" id=\"60\"><label for=\"60\">60</label></p><p><input name=\"duration\" value=\"90\" type=\"radio\" id=\"90\"><label for=\"90\">90</label></p><br><label><b>Number of people</b></label><input type=\"number\" placeholder=\"Enter Number of people\" min=\"1\" max=\"15\" name=\"capacity\" required><button type=\"submit\">Confirm</button></div><div class=\"container\"><button type=\"button\" onclick=\"document.getElementById('"+ allTimings[i] +"_2').style.display='none'\" class=\"cancelbtn\">Cancel</button></div></form></div>"
+        textRoom2 += "<li class=\"list\"><a class=\"available green accent-3\" onclick=\"document.getElementById('" +allTimings[i]+ "_2').style.display='block'\">"  + allTimings[i] + "</a></li>";
+        popups += "<div id=\""+ allTimings[i] + "_2\" class=\"modal_form\"><form class=\"modal-content animate\" action=\"/"+$('#name').val()+"/new/2/" +date+"/"+allTimings[i].replace(/:/g , "") + "\" method=\"get\"><div class=\"container\"><p>You are about to make a booking on " + displaydate +" at "+ allTimings[i] +" in Room 2. Enter the number of people below and press confirm to make the booking</p><label><b>Duration (in minutes)</b></label><p><input name=\"duration\" type=\"radio\" id=\"rm2_30\" value=\"30\"><label for=\"rm2_30\">30</label></p><p><input name=\"duration\" value=\"60\" type=\"radio\" id=\"rm2_60\"><label for=\"rm2_60\">60</label></p><p><input name=\"duration\" value=\"90\" type=\"radio\" id=\"rm2_90\"><label for=\"rm2_90\">90</label></p><br><label><b>Number of people</b></label><input type=\"number\" placeholder=\"Enter Number of people (max 15)\" min=\"1\" max=\"15\" name=\"capacity\" required><button type=\"submit\">Confirm</button></div><div class=\"container\"><button type=\"button\" onclick=\"document.getElementById('"+ allTimings[i] +"_2').style.display='none'\" class=\"cancelbtn\">Cancel</button></div></form></div>"
         script1 += "var two_" + i +" = document.getElementById(\""+allTimings[i]+"_2\");"
         script2 += "if (event.target == two_" + i + ") { two_" + i + ".style.display = \"none\"};"
       }
       else{
-        textRoom2 += "<li class=\"list\"><a class=\"busy\">" + allTimings[i] + "</a></li>";
+        textRoom2 += "<li class=\"list\"><a class=\"busy red lighten-1\">" + allTimings[i] + "</a></li>";
       }
       if(availableRoom3.includes(allTimings[i])){
-        textRoom3 += "<li class=\"list\"><a class=\"available\" onclick=\"document.getElementById('" +allTimings[i]+ "_3').style.display='block'\">"  + allTimings[i] + "</a></li>";
-        popups += "<div id=\""+ allTimings[i] + "_3\" class=\"modal_form\"><form class=\"modal-content animate\" action=\"/"+$('#name').val()+"/new/3/" +date+"/"+allTimings[i].replace(/:/g , "") + "\" method=\"get\"><div class=\"container\"><p>You are about to make a booking on " + $('#date').val() +" at "+ allTimings[i] +" in Room 3. Enter the number of people below and press confirm to make the booking</p><label><b>Duration (in minutes)</b></label><p><input name=\"duration\" type=\"radio\" id=\"30\" value=\"30\"><label for=\"30\">30</label></p><p><input name=\"duration\" value=\"60\" type=\"radio\" id=\"60\"><label for=\"60\">60</label></p><p><input name=\"duration\" value=\"90\" type=\"radio\" id=\"90\"><label for=\"90\">90</label></p><br><label><b>Number of people</b></label><input type=\"number\" placeholder=\"Enter Number of people\" min=\"1\" max=\"5\" name=\"capacity\" required><button type=\"submit\">Confirm</button></div><div class=\"container\"><button type=\"button\" onclick=\"document.getElementById('"+ allTimings[i] +"_3').style.display='none'\" class=\"cancelbtn\">Cancel</button></div></form></div>"
+        textRoom3 += "<li class=\"list\"><a class=\"available green accent-3 \" onclick=\"document.getElementById('" +allTimings[i]+ "_3').style.display='block'\">"  + allTimings[i] + "</a></li>";
+        popups += "<div id=\""+ allTimings[i] + "_3\" class=\"modal_form\"><form class=\"modal-content animate\" action=\"/"+$('#name').val()+"/new/3/" +date+"/"+allTimings[i].replace(/:/g , "") + "\" method=\"get\"><div class=\"container\"><p>You are about to make a booking on " + displaydate +" at "+ allTimings[i] +" in Room 3. Enter the number of people below and press confirm to make the booking</p><label><b>Duration (in minutes)</b></label><p><input name=\"duration\" type=\"radio\" id=\"rm3_30\" value=\"30\"><label for=\"rm3_30\">30</label></p><p><input name=\"duration\" value=\"60\" type=\"radio\" id=\"rm_360\"><label for=\"rm3_60\">60</label></p><p><input name=\"duration\" value=\"90\" type=\"radio\" id=\"rm3_90\"><label for=\"rm3_90\">90</label></p><br><label><b>Number of people</b></label><input type=\"number\" placeholder=\"Enter Number of people (max 5)\" min=\"1\" max=\"5\" name=\"capacity\" required><button type=\"submit\">Confirm</button></div><div class=\"container\"><button type=\"button\" onclick=\"document.getElementById('"+ allTimings[i] +"_3').style.display='none'\" class=\"cancelbtn\">Cancel</button></div></form></div>"
         script1 += "var three_" + i +" = document.getElementById(\""+allTimings[i]+"_3\");"
         script2 += "if (event.target == three_" + i + ") { three_" + i + ".style.display = \"none\"};"
       }
       else{
-        textRoom3 += "<li class=\"list\"><a class=\"busy\">" + allTimings[i] + "</a></li>";
+        textRoom3 += "<li class=\"list\"><a class=\"busy red lighten-1\">" + allTimings[i] + "</a></li>";
       }
       if(availableRoom4.includes(allTimings[i])){
-        textRoom4 += "<li class=\"list\"><a class=\"available\" onclick=\"document.getElementById('" +allTimings[i]+ "_4').style.display='block'\">"  + allTimings[i] + "</a></li>";
-        popups += "<div id=\""+ allTimings[i] + "_4\" class=\"modal_form\"><form class=\"modal-content animate\" action=\"/"+$('#name').val()+"/new/4/" +date+"/"+allTimings[i].replace(/:/g , "") + "\" method=\"get\"><div class=\"container\"><p>You are about to make a booking on " + $('#date').val() +" at "+ allTimings[i] +" in Room 4. Enter the number of people below and press confirm to make the booking</p><label><b>Duration (in minutes)</b></label><p><input name=\"duration\" type=\"radio\" id=\"30\" value=\"30\"><label for=\"30\">30</label></p><p><input name=\"duration\" value=\"60\" type=\"radio\" id=\"60\"><label for=\"60\">60</label></p><p><input name=\"duration\" value=\"90\" type=\"radio\" id=\"90\"><label for=\"90\">90</label></p><br><label><b>Number of people</b></label><input type=\"number\" placeholder=\"Enter Number of people\" min=\"1\" max=\"20\" name=\"capacity\" required><button type=\"submit\">Confirm</button></div><div class=\"container\"><button type=\"button\" onclick=\"document.getElementById('"+ allTimings[i] +"_4').style.display='none'\" class=\"cancelbtn\">Cancel</button></div></form></div>"
+        textRoom4 += "<li class=\"list\"><a class=\"available green accent-3\" onclick=\"document.getElementById('" +allTimings[i]+ "_4').style.display='block'\">"  + allTimings[i] + "</a></li>";
+        popups += "<div id=\""+ allTimings[i] + "_4\" class=\"modal_form\"><form class=\"modal-content animate\" action=\"/"+$('#name').val()+"/new/4/" +date+"/"+allTimings[i].replace(/:/g , "") + "\" method=\"get\"><div class=\"container\"><p>You are about to make a booking on " + displaydate +" at "+ allTimings[i] +" in Room 4. Enter the number of people below and press confirm to make the booking</p><label><b>Duration (in minutes)</b></label><p><input name=\"duration\" type=\"radio\" id=\"rm4_30\" value=\"30\"><label for=\"rm4_30\">30</label></p><p><input name=\"duration\" value=\"60\" type=\"radio\" id=\"rm4_60\"><label for=\"rm4_60\">60</label></p><p><input name=\"duration\" value=\"90\" type=\"radio\" id=\"rm4_90\"><label for=\"rm4_90\">90</label></p><br><label><b>Number of people</b></label><input type=\"number\" placeholder=\"Enter Number of people (max 20)\" min=\"1\" max=\"20\" name=\"capacity\" required><button type=\"submit\">Confirm</button></div><div class=\"container\"><button type=\"button\" onclick=\"document.getElementById('"+ allTimings[i] +"_4').style.display='none'\" class=\"cancelbtn\">Cancel</button></div></form></div>"
         script1 += "var four_" + i +" = document.getElementById(\""+allTimings[i]+"_4\");"
         script2 += "if (event.target == four_" + i + ") { four_" + i + ".style.display = \"none\"};"
       }
       else{
-        textRoom4 += "<li class=\"list\"><a class=\"busy\">" + allTimings[i] + "</a></li>";
+        textRoom4 += "<li class=\"list\"><a class=\"busy red lighten-1\">" + allTimings[i] + "</a></li>";
       }
   }
   $('#l1').append(textRoom1);
@@ -157,7 +165,7 @@ function makeTable_2(json,outside){
   document.getElementById("progress").style.visibility = "hidden";
   $("#results").fadeIn(2000);
 
-}
+};
 
 
 $(function() {

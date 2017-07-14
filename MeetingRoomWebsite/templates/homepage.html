@@ -1,14 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block style %}
-<style>
-  img.middle {
-      vertical-align: middle;
-      padding-left:5em;
-  }
-</style>
-{% endblock style %}
 
 {% block content %}
   <main>
@@ -43,38 +35,94 @@
         </div>
       {% endfor %}
       {% else %}
-      <h4 style="font-size:30px">No Upcoming Bookings</h4>
+      <div class="col s12 m3">
+          <div class="card-panel red lighten-1 hoverable">
+              <span class="white-text"><b>No Upcoming Bookings</b></span>
+          </div>
+      </div>
       {% endif %}
     </div>
-
-    <br><br>
+<div class="divider"></div>
+  <br><br>
     <h3>All bookings for today</h3>
-    <div class="row" id="list2">
-      {% if allBookings != '[]' %}
-      {% for book in allBookings %}
-        <div class="col s12 m6">
-          <div class="card horizontal hoverable z-depth-5" id='l2_{{ forloop.counter }}' style="opacity: 0;">
-            <div class="card-image">
-              {% if book.room == '1' %}
-               <img src="{% static 'room1.jpg' %}">
-              {% elif book.room == '2' %}
-               <img src="{% static 'room2.jpg' %}">
-              {% elif book.room == '3' %}
-               <img src="{% static 'room3.jpg' %}">
-              {% elif book.room == '4' %}
-               <img src="{% static 'room4.jpg' %}">
-              {% endif %}
-            </div>
-            <div class="card-stacked">
-              <div class="card-content">
-                <p><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}} ({{book.duration}} mins)<br><b>Room</b> : {{book.room}}<br>Meeting is with {{book.capacity}} people</p>
-              </div>
+    <h4>Room 1:</h4>
+    <div class="row" id="rm1">
+      {% if rm1 %}
+        {% for book in rm1 %}
+        <div class="col s3">
+          <div style="display: inline-block;">
+            <div class="card-panel teal hoverable">
+                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
             </div>
           </div>
         </div>
-      {% endfor %}
+        {% endfor %}
       {% else %}
-      <h4 style="font-size:30px">No Bookings for Today</h4>
+      <div class="col s12 m3">
+          <div class="card-panel red lighten-1 hoverable">
+              <span class="white-text"><b>No bookings in room 1 today</b></span>
+          </div>
+      </div>
+      {% endif %}
+    </div>
+    <h4>Room 2:</h4>
+    <div class="row" id="rm2">
+      {% if rm2 %}
+        {% for book in rm2 %}
+        <div class="col s12 m3">
+          <div style="display: inline-block;">
+            <div class="card-panel teal hoverable">
+                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+      <div class="col s12 m3">
+          <div class="card-panel red lighten-1 hoverable">
+              <span class="white-text"><b>No bookings in room 2 today</b></span>
+          </div>
+      </div>
+      {% endif %}
+    </div>
+    <h4>Room 3:</h4>
+    <div class="row" id="rm3">
+      {% if rm3 %}
+        {% for book in rm3 %}
+        <div class="col s12 m3">
+          <div style="display: inline-block;">
+            <div class="card-panel teal hoverable">
+                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+      <div class="col s12 m3">
+          <div class="card-panel red lighten-1 hoverable">
+              <span class="white-text"><b>No bookings in room 3 today</b></span>
+          </div>
+      </div>
+      {% endif %}
+    </div>
+    <h4>Room 4:</h4>
+    <div class="row" id="rm4">
+      {% if rm4 %}
+        {% for book in rm4 %}
+        <div class="col s12 m3">
+          <div style="display: inline-block;">
+            <div class="card-panel teal hoverable">
+                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+      <div class="col s12 m3">
+          <div class="card-panel red lighten-1 hoverable">
+              <span class="white-text"><b>No bookings in room 4 today</b></span>
+          </div>
+      </div>
       {% endif %}
     </div>
      <br><br><br>
@@ -101,17 +149,18 @@
        } },
      {% endfor %}
      {% endif %}
-     {% if allBookings != '[]' %}
-     {% for book in allBookings %}
-      {selector: '#l2_{{ forloop.counter }}', offset: 150, callback: function(el) {
-        Materialize.fadeInImage($(el));
-      } },
-    {% endfor %}
-    {% endif %}
+    //  {% if allBookings != '[]' %}
+    //  {% for book in allBookings %}
+    //   {selector: '#l2_{{ forloop.counter }}', offset: 150, callback: function(el) {
+    //     Materialize.fadeInImage($(el));
+    //   } },
+    // {% endfor %}
+    // {% endif %}
    ];
    Materialize.scrollFire(options);
   }
 </script>
+
 
 
 {% endblock javascript %}

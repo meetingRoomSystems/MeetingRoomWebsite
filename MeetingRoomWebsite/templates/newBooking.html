@@ -191,11 +191,14 @@
 
 <main>
   <form id="post-form-new">{% csrf_token %}
-    <label><b>Date</b></label>
-    <input type="date" class="datepicker" name="date" id="date" required>
+    <h4>Pick a date</h4>
+    <div class="input-field col s6">
+          <input id="date" type="date" class="datepicker" name="date">
+          <label for="date">Date</label>
+    </div>
     <a class="btn" onclick="start_2()" id="button">Check Available Bookings</a>
     <input type="text" id="name" style="visibility:hidden" value="{{username}}">
-    <div id="error"></div>
+    <span id="error"></span>
   </form>
   <div id="progress" style="visibility:hidden;margin:auto;width:50%">
     <div class="preloader-wrapper big active">
@@ -241,7 +244,7 @@
   </div>
   <div id="results" style="visibility: hidden;">
     <h3 id="title_booking">All bookings on </h3>
-      <ul id="tabs-swipe-demo" class="tabs tabs-fixed-width">
+      <ul id="tabs-swipe" class="tabs tabs-fixed-width">
         <li class="tab col s3"><a href="#test-swipe-1">Room 1</a></li>
         <li class="tab col s3"><a href="#test-swipe-2">Room 2</a></li>
         <li class="tab col s3"><a href="#test-swipe-3">Room 3</a></li>
@@ -288,6 +291,7 @@
 </script>
 
 
+
 <div id="script">
 </div>
 
@@ -308,7 +312,7 @@ $(document).ready(function (){
     $("#results").fadeOut(0);
     document.getElementById("results").style.visibility = "visible";
     {% if date == '1' %}
-    create_post('yes','{{username}}')
+    create_post_2('yes','{{username}}')
     {% endif %}
   }
 </script>

@@ -1,6 +1,6 @@
 body{
-  /*background-color: #ef9a9a;*/
-  background-image: url("../background.jpg");
+  /*background-color: #F8F8FF;*/
+  background-image: url("../background_2.png");
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -20,3 +20,14 @@ main {
   top:0;
   right:0;
 }
+
+#menu{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:100;
+}
+
+/*h1,h2,h3,h4,h5,h6,p,li{
+  color: white
+}*/
