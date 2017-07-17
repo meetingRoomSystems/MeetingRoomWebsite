@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^(?P<username>\w+)/manage',views.manage,name="manage"),
     url(r'^(?P<username>\w+)/delete/(?P<date>[-\w]+)/(?P<time>[:\w]+)/(?P<room>\w)',views.delete,name="delete"),
     url(r'^(?P<username>\w+)/deleteOld',views.deleteOld,name="deleteOld"),
+    url(r'^(?P<username>\w+)/makeAdmin/(?P<name>\w+)',views.makeAdmin,name="makeAdmin"),
 
 
 ]

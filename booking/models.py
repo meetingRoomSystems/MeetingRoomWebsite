@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+# django database to store details about user that will be obtained from the MySQL database
 
 class UserInfo(models.Model):
     username = models.CharField(max_length = 100)

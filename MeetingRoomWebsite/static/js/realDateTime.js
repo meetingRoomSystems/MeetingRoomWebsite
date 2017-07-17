@@ -1,3 +1,4 @@
+// javascript file used to show the current date and time in real time
 function display_c(){
   var refresh=1000; // Refresh rate in milli seconds
   mytime=setTimeout('display_ct()',refresh)

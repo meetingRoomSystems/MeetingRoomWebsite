@@ -1,4 +1,6 @@
+// this function is called from newBooking.html when the user selects a date
 function start_2(){
+  // checks if user has selected a date or  not
   if($('#date').val() == ''){
     create_post_2('yes',$('#name').val());
   }
@@ -8,9 +10,10 @@ function start_2(){
     create_post_2('no',$('#name').val());
   }
 };
-
+// function to make a ajax call to get available bookings in json format
 function create_post_2(outside,username) {
     var urlLink = "/"+username + "/new/";
+    // check if call made from rooms.html or newBooking.html
     if(outside == 'yes'){
       var today = new Date();
       today.setHours(0,0,0,0)
@@ -44,7 +47,7 @@ function create_post_2(outside,username) {
 
 
     }
-
+    // make ajax call
     $.ajax({
           url : urlLink, // the endpoint
           type : "POST", // http method
@@ -65,6 +68,7 @@ function create_post_2(outside,username) {
       });
 };
 
+// parse the json response and append to allBookings.html
 function makeTable_2(json,outside){
   if(outside == 'yes'){
     var d = new Date();
@@ -84,6 +88,7 @@ function makeTable_2(json,outside){
   var date = d.getFullYear()+ mm + dd;
   var displaydate = dd + '-' + mm + '-' + d.getFullYear();
 
+  // delete all html code between the divs with the followings ids
   $('#l1').text('');
   $('#l2').text('');
   $('#l3').text('');
@@ -96,6 +101,7 @@ function makeTable_2(json,outside){
   var availableRoom3 = json.room3;
   var availableRoom4 = json.room4;
   var today = new Date();
+  // get the all timings that have not passed for the day selected (so if day is today get all timings from now to end of the day.)
   if(d>today){
     var allTimings = ["08:00:00","08:30:00","09:00:00","09:30:00","10:00:00","10:30:00","11:00:00","11:30:00","12:00:00","12:30:00","13:00:00","13:30:00","14:00:00","14:30:00","15:00:00","15:30:00","16:00:00", "16:30:00", "17:00:00","17:30:00"];
   }
@@ -116,8 +122,10 @@ function makeTable_2(json,outside){
   }
 
   var arrayLength = allTimings.length;
+  // go through all timings in allTimings
   for (var i = 0; i < arrayLength; i++) {
-      if(availableRoom1.includes(allTimings[i])){
+     // check if timing is all Timing is available or booked for room one.
+     if(availableRoom1.includes(allTimings[i])){
         textRoom1 += "<li class=\"list\"><a class=\"available green accent-3\" onclick=\"document.getElementById('" +allTimings[i]+ "_1').style.display='block'\">" + allTimings[i] + "</a></li>";
         popups += "<div id=\""+ allTimings[i] + "_1\" class=\"modal_form\"><form class=\"modal-content animate\" action=\"/"+$('#name').val()+"/new/1/" +date+"/"+allTimings[i].replace(/:/g , "") + "\" method=\"get\"><div class=\"container\"><p>You are about to make a booking on " + displaydate +" at "+ allTimings[i] +" in Room 1. Enter the number of people below and press confirm to make the booking</p><label><b>Duration (in minutes)</b></label><p><input name=\"duration\" type=\"radio\" id=\"rm1_"+i+"_30\" value=\"30\"><label for=\"rm1_"+i+"_30\">30</label></p><p><input name=\"duration\" value=\"60\" type=\"radio\" id=\"rm1_"+i+"_60\"><label for=\"rm1_"+i+"_60\">60</label></p><p><input name=\"duration\" value=\"90\" type=\"radio\" id=\"rm1_"+i+"_90\"><label for=\"rm1_"+i+"_90\">90</label></p><br><label><b>Number of people</b></label><input type=\"number\" placeholder=\"Enter Number of people (max 10)\" min=\"1\" max=\"10\" name=\"capacity\" required><button type=\"submit\">Confirm</button></div><div class=\"container\"><button type=\"button\" onclick=\"document.getElementById('"+ allTimings[i] +"_1').style.display='none'\" class=\"cancelbtn\">Cancel</button></div></form></div>"
         script1 += "var one_" + i +" = document.getElementById(\""+allTimings[i]+"_1\");"
@@ -154,6 +162,8 @@ function makeTable_2(json,outside){
         textRoom4 += "<li class=\"list\"><a class=\"busy red lighten-1\">" + allTimings[i] + "</a></li>";
       }
   }
+
+  // put new html code between the divs with the following ids
   $('#l1').append(textRoom1);
   $('#l2').append(textRoom2);
   $('#l3').append(textRoom3);

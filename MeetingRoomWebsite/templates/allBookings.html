@@ -93,14 +93,15 @@ $('.datepicker').pickadate({
 
 
 <script>
-$(document).ready(function (){
-  $("#button").on('click',function(){
-         $('html, body').animate({
-              scrollTop: '+=300px'
-        }, 2500);
-    });
+// scrolling down animation
+  $(document).ready(function (){
+    $("#button").on('click',function(){
+           $('html, body').animate({
+                scrollTop: '+=300px'
+          }, 2500);
+      });
 
-});
+  });
 
   window.onload = function(){
     display_ct();

@@ -1,4 +1,6 @@
+// this function is called from allBooking.html when the user selects a date
 function start(){
+  // checks if user has selected a date or  not
   if($('#date').val() == ''){
     create_post('yes',$('#name').val());
   }
@@ -9,8 +11,10 @@ function start(){
   }
 }
 
+// function to make a ajax call to get bookings in json format
 function create_post(outside,username) {
     var urlLink = "/"+username + "/all";
+    // check if call made from rooms.html or allBooking.html
     if(outside == 'yes'){
       var today = new Date();
       var mm = (today.getMonth()+1 > 9 ? '' : '0') + (today.getMonth()+1);
@@ -42,7 +46,7 @@ function create_post(outside,username) {
         $('#title_booking').text("All Bookings on " + $('#date').val())
       }
     }
-
+    // make ajax call
     $.ajax({
           url : urlLink, // the endpoint
           type : "POST", // http method
@@ -52,7 +56,7 @@ function create_post(outside,username) {
           success : function(json) {
             console.log(date);
             console.log(json); // log the returned json to the console
-            console.log("success"); // another sanity check
+            console.log("success");
             makeTable(json)
           },
 
@@ -65,6 +69,7 @@ function create_post(outside,username) {
       });
 };
 
+// parse the json response and append to allBookings.html
 function makeTable(json){
   var response;
   var content1 = '';
@@ -76,6 +81,7 @@ function makeTable(json){
   $("#rm3").text('');
   $("#rm4").text('');
   if(json.rm1.length == 0){
+    // add the html code inside the div with id rm1.
     content1 +="<div class=\"col s12 m3\"><div class=\"card-panel red lighten-1 hoverable\"><span class=\"white-text\"><b>No bookings in room 1</b></span></div></div>"
     $('#rm1').append(content1);
   }
