@@ -660,13 +660,13 @@ def deleteOld(request,username):
 def makeAdmin(request,username,name):
     """ function to make an user an admin """
     try:
-        user = UserInfo.objects.get(username = admin)
+        user = UserInfo.objects.get(username = username)
         if(user.loggedIn):
             fullname = user.fullname
             admin = user.username
             role = user.role
             if(role != 'admin'):
-                return redirect(request,username = admin)
+                return redirect(homepage,username = username)
         else:
             return render(request,'index.html',{
               'errorMessage' : 'Please Log in first',
