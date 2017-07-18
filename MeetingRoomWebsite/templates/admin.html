@@ -25,22 +25,22 @@
             <div class="card-action white-text">
               <p>Change to room...</p>
               {% if '1' in book.availabeRooms and book.capacity < 11 %}
-              <a class="waves-effect waves-light btn-large z-depth-5" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '1'  %}">1</a>
+              <a class="waves-effect waves-light btn-large hoverable" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '1'  %}">1</a>
               {% else %}
               <a class="waves-effect waves-light btn-large disabled" style="width:auto;">1</a>
               {% endif %}
               {% if '2' in book.availabeRooms and book.capacity < 16 %}
-              <a class="waves-effect waves-light btn-large z-depth-5" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '2'  %}">2</a>
+              <a class="waves-effect waves-light btn-large hoverable" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '2'  %}">2</a>
               {% else %}
               <a class="waves-effect waves-light btn-large disabled" style="width:auto;">2</a>
               {% endif %}
               {% if '3' in book.availabeRooms and book.capacity < 6 %}
-              <a class="waves-effect waves-light btn-large z-depth-5" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '3'  %}">3</a>
+              <a class="waves-effect waves-light btn-large hoverable" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '3'  %}">3</a>
               {% else %}
               <a class="waves-effect waves-light btn-large disabled" style="width:auto;">3</a>
               {% endif %}
               {% if '4' in book.availabeRooms and book.capacity < 21 %}
-              <a class="waves-effect waves-light btn-large z-depth-5" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '4'  %}">4</a>
+              <a class="waves-effect waves-light btn-large hoverable" style="width:auto;" href="{% url 'changeRoom' username book.username book.booking_date book.booking_start book.room '4'  %}">4</a>
               {% else %}
               <a class="waves-effect waves-light btn-large disabled" style="width:auto;">4</a>
               {% endif %}
@@ -57,12 +57,12 @@
         {% endif %}
       </div>
    <br><br>
-   <h3>Total bookings for each user</h3>
-   <div class="collection">
+   <ul class="collection with-header">
+     <li class="collection-header"><h4>Total bookings for each user</h4></li>
      {% for bookCount in bookingCount %}
-    <a class="collection-item"><span class="badge">{{bookCount.count}}</span>{{bookCount.username}}</a>
-    {% endfor %}
-  </div>
+      <li class="collection-item"><div>{{bookCount.username}}<span class="secondary-content">{{bookCount.count}}</span></div></li>
+     {% endfor %}
+  </ul>
   <br><br>
   <ul class="collection with-header">
        <li class="collection-header"><h4>Give user Admin Privileges</h4></li>

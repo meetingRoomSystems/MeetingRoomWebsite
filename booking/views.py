@@ -7,6 +7,7 @@ from .models import UserInfo
 
 # url of the php file and database
 url = 'https://compulynxmeetingrooms.000webhostapp.com/'
+# url = 'http://localhost:3000/compulynx/'
 
 def index(request):
     """ Renders the index page of the application """
@@ -66,10 +67,11 @@ def register(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             fullname = form.cleaned_data['fullname']
-    if ' ' in username:
+    punctuations = ['&','$','+',',','/',':',';','=','?','@','#','<','>','{','}','|','\\','^','%',' ']
+    if any(x in username for x in punctuations) :
         return render(request,'index.html',{
-            'errorMessage' : 'No spaces in username',
-            'visibility':'visible',
+            'errorMessage' : 'Wrong punctuation(s) used in username',
+            'visibility':'hidden',
         })
     # add user to MySQL database
     loginURL = url + 'register.php?fullname={}&username={}&user_password={}'.format(fullname,username,password)
@@ -310,13 +312,13 @@ def newBooking(request,username):
                     booked_room4.append(booking_time)
                 # add timings from allTimings into each available_room array only if that timing is not in booked_time
                 for time in allTimings:
-                    if time not in booked_times_1:
+                    if time not in booked_room1:
                         available_room1.append(time)
-                    if time not in booked_times_2:
+                    if time not in booked_room2:
                         available_room2.append(time)
-                    if time not in booked_times_3:
+                    if time not in booked_room3:
                         available_room3.append(time)
-                    if time not in booked_times_4:
+                    if time not in booked_room4:
                         available_room4.append(time)
             response_data = {'room1':available_room1,'room2':available_room2,'room3':available_room3,'room4':available_room4}
             #  send the data back in json
@@ -475,7 +477,7 @@ def adminSettings(request,username):
                     availableRooms = list(rooms.values())
             else:
                 availableRooms = ['1','2','3','4']
-            bookingDetails = {'username':book['username'],'fullname':book['fullname'],'booking_date':book['booking_date'],'booking_start':book['booking_start'],'booking_end':book['booking_end'],'room':book['room'],'capacity':int(book['capacity']),'availabeRooms':availableRooms}
+            bookingDetails = {'username':book['username'],'fullname':book['fullname'],'duration':book['duration'],'booking_date':book['booking_date'],'booking_start':book['booking_start'],'booking_end':book['booking_end'],'room':book['room'],'capacity':int(book['capacity']),'availabeRooms':availableRooms}
             results.append(bookingDetails)
     bookingCountURL = url + 'getNumberOfBookings.php'
     bookingCountResults = json.loads(requests.get(bookingCountURL).text)

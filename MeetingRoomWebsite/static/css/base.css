@@ -8,12 +8,24 @@ body{
 main {
     padding-left: 100px;
     padding-right: 100px;
+    padding-top: 50px;
     flex: 1 0 auto;
   }
-@media only screen and (max-width : 992px) {
+@media only screen and (max-width : 600px) {
     header, main, footer {
       padding-left: 0;
+      padding-top: 0px;
     }
+
+}
+@media only screen and (min-width : 610px) {
+  #menu{
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:100;
+  }
+
 }
 #datetime{
   position:absolute;
@@ -21,12 +33,7 @@ main {
   right:0;
 }
 
-#menu{
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:100;
-}
+
 
 /*h1,h2,h3,h4,h5,h6,p,li{
   color: white

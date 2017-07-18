@@ -63,7 +63,7 @@
     background: #ff0000;
   }
 
-  input[type=text], input[type=password] {
+  input[type=number], input[type=radio] {
       width: 100%;
       padding: 12px 20px;
       margin: 8px 0;
@@ -172,13 +172,31 @@
   }
 
   /* Change styles for span and cancel button on extra small screens */
-  @media screen and (max-width: 300px) {
+  @media screen and (max-width: 500px) {
       span.psw {
          display: block;
          float: none;
       }
       .cancelbtn {
          width: 100%;
+      }
+      #results{
+        width:500px;
+      }
+  }
+  @media screen and (max-width: 450px) {
+      #results{
+        width:400px;
+      }
+  }
+  @media screen and (max-width: 400px) {
+      #results{
+        width:350px;
+      }
+  }
+  @media screen and (max-width: 360px) {
+      #results{
+        width:300px;
       }
   }
 </style>
@@ -245,27 +263,27 @@
   <div id="results" style="visibility: hidden;">
     <h3 id="title_booking">All bookings on </h3>
       <ul id="tabs-swipe" class="tabs tabs-fixed-width">
-        <li class="tab col s3"><a href="#test-swipe-1">Room 1</a></li>
-        <li class="tab col s3"><a href="#test-swipe-2">Room 2</a></li>
-        <li class="tab col s3"><a href="#test-swipe-3">Room 3</a></li>
-        <li class="tab col s3"><a href="#test-swipe-4">Room 4</a></li>
+        <li class="tab col s3"><a href="#tab_1">Room 1</a></li>
+        <li class="tab col s3"><a href="#tab_2">Room 2</a></li>
+        <li class="tab col s3"><a href="#tab_3">Room 3</a></li>
+        <li class="tab col s3"><a href="#tab_4">Room 4</a></li>
       </ul>
-      <div id="test-swipe-1" class="col s12 white" style="height:900px"> &nbsp;
+      <div id="tab_1" class="col s12 white" style="height:900px">
         <h2 style="text-align:center;">All Timings for Room 1</h2>
         <ul id="l1">
         </ul>
       </div>
-      <div id="test-swipe-2" class="col s12 white">&nbsp;
+      <div id="tab_2" class="col s12 white">
         <h2 style="text-align:center;">All Timings for Room 2</h2>
         <ul id="l2">
         </ul>
       </div>
-      <div id="test-swipe-3" class="col s12 white">&nbsp;
+      <div id="tab_3" class="col s12 white">
         <h2 style="text-align:center;">All Timings for Room 3</h2>
         <ul id="l3">
         </ul>
       </div>
-      <div id="test-swipe-4" class="col s12 white">&nbsp;
+      <div id="tab_4" class="col s12 white">
         <h2 style="text-align:center;">All Timings for Room 4</h2>
         <ul id="l4">
         </ul>
