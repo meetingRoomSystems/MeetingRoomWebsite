@@ -74,6 +74,7 @@ def register(request):
             'visibility':'hidden',
         })
     # add user to MySQL database
+    fullname.title()
     loginURL = url + 'register.php?fullname={}&username={}&user_password={}'.format(fullname,username,password)
     loginResults =  json.loads(requests.get(loginURL).text)
     successCode = loginResults['success']
@@ -290,6 +291,12 @@ def newBooking(request,username):
         else:
             allBookingURL = url + 'getbooking.php?booking_date={}&room=0'.format(date)
             allBookingResults =  json.loads(requests.get(allBookingURL).text)
+            namesURL = url + 'getAllUsers.php?username={}'.format(username)
+            namesResults = json.loads(requests.get(namesURL).text)
+            userList = namesResults['names']
+            names = []
+            for user in userList:
+                names.append({'fullname':user['fullname'],'username':user['username']})
 
             allTimings = ["08:00:00","08:30:00","09:00:00","09:30:00","10:00:00","10:30:00","11:00:00","11:30:00","12:00:00","12:30:00","13:00:00","13:30:00","14:00:00","14:30:00","15:00:00","15:30:00","16:00:00", "16:30:00", "17:00:00","17:30:00"]
             booked_room1 = []
@@ -320,7 +327,7 @@ def newBooking(request,username):
                         available_room3.append(time)
                     if time not in booked_room4:
                         available_room4.append(time)
-            response_data = {'room1':available_room1,'room2':available_room2,'room3':available_room3,'room4':available_room4}
+            response_data = {'room1':available_room1,'room2':available_room2,'room3':available_room3,'room4':available_room4,'names':names}
             #  send the data back in json
             return HttpResponse(
                 json.dumps(response_data),
@@ -355,10 +362,18 @@ def makeBooking(request,username,room,date,time):
 
     capacity = request.GET.get('capacity')
     duration = request.GET.get('duration')
+    if not duration:
+        duration=30
+    tags = request.GET.getlist('tags')
     # date and time in url is as a singe number. Parse and make them into the correct format
     date = date[0:4] + '-' + date[4:6] + '-' + date[6:]
     time = time[0:2]+ ":" + time[2:4] + ":" + time[4:]
     makeBookingURL = url + 'setbooking.php?fullname={}&username={}&capacity={}&room={}&booking_date={}&booking_time={}&length={}'.format(fullname,username,capacity,room,date,time,duration)
+    if tags != []:
+        for tag in tags:
+            makeBookingURL += '&tags[]={}'.format(tag)
+    else:
+        makeBookingURL += '&tags[]=none'
     makeBookingResults =  json.loads(requests.get(makeBookingURL).text)
     checkIfMade = makeBookingResults['success']
     if(checkIfMade == 1):

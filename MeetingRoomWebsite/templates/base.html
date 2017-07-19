@@ -29,8 +29,8 @@
         <li><div class="divider"></div></li>
         <li><a id="homepageOption" class="waves-effect"  href="{% url 'homepage' username %}"><i class="material-icons">home</i>Homepage</a></li>
         <li><a class="waves-effect" href="{% url 'newBooking' username %}"><i class="material-icons">add</i>New Booking</a></li>
-        <li><a class="waves-effect" href="{% url 'manage' username %}"><i class="material-icons">delete</i>Delete my booking</a></li>
-        <li><a class="waves-effect" href="{% url 'allBookings' username %}"><i class="material-icons">today</i>View all bookings</a></li>
+        <li><a class="waves-effect" href="{% url 'manage' username %}"><i class="material-icons">delete</i>Delete My Bookings</a></li>
+        <li><a class="waves-effect" href="{% url 'allBookings' username %}"><i class="material-icons">today</i>View All Bookings</a></li>
         <li><a class="waves-effect" href="{% url 'rooms' username %}"><i class="material-icons">room</i>Meeting Rooms</a></li>
         {% if role == 'admin' %}
         <li><a class="waves-effect" href="{% url 'adminSettings' username %}"><i class="material-icons">settings</i>Admin Settings</a></li>
@@ -78,11 +78,9 @@
 
     <script>
       $(".button-collapse").sideNav({
-      closeOnClick: true,
       draggable: true,
       });
       $("#menufob").sideNav({
-      closeOnClick: true,
       draggable: true,
       });
 

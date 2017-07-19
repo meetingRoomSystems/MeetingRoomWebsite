@@ -88,7 +88,13 @@ function makeTable(json){
   else{
     for (i = 0; i < json.rm1.length; i++) {
       response = json.rm1[i];
-      content1 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people</span></div></div></div>"
+      if(response.others == ''){
+        content1 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people</span></div></div></div>"
+      }
+      else{
+        content1 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people, which include " + response.others +"</span></div></div></div>"
+      }
+
     }
     $('#rm1').append(content1);
   }
@@ -99,7 +105,12 @@ function makeTable(json){
   else{
     for (i = 0; i < json.rm2.length; i++) {
       response = json.rm2[i];
-      content2 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people</span></div></div></div>"
+      if(response.others == ''){
+        content2 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people</span></div></div></div>"
+      }
+      else{
+        content2 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people, which include " + response.others +"</span></div></div></div>"
+      }
     }
     $('#rm2').append(content2);
   }
@@ -111,7 +122,12 @@ function makeTable(json){
   else{
     for (i = 0; i < json.rm3.length; i++) {
       response = json.rm3[i];
-      content3 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people</span></div></div></div>"
+      if(response.others == ''){
+        content3 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people</span></div></div></div>"
+      }
+      else{
+        content3 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people, which include " + response.others +"</span></div></div></div>"
+      }
     }
     $('#rm3').append(content3);
   }
@@ -123,7 +139,12 @@ function makeTable(json){
   else{
     for (i = 0; i < json.rm4.length; i++) {
       response = json.rm4[i];
-      content4 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people</span></div></div></div>"
+      if(response.others == ''){
+        content4 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people</span></div></div></div>"
+      }
+      else{
+        content4 += "<div class=\"col s12 m3\"><div style=\"display: inline-block;\"><div class=\"card-panel teal hoverable\"><span class=\"white-text\"><b>By</b> : " + response.fullname + "<br><b>Time</b> : " + response.booking_start + " - "+ response.booking_end + "<br><b>Duration</b> : "+ response.duration + " minutes<br>Meeting is with "+response.capacity + " people, which include " + response.others +"</span></div></div></div>"
+      }
     }
     $('#rm4').append(content4);
   }

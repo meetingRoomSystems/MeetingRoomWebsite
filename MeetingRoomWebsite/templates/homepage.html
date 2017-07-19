@@ -25,7 +25,11 @@
             </div>
             <div class="card-stacked">
               <div class="card-content">
-                <p><b>Date</b> : {{book.booking_date}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}} ({{book.duration}} mins)<br><b>Room</b> : {{book.room}}<br>Meeting is with {{book.capacity}} people</p>
+                {% if book.others == '' %}
+                  <p><b>Date</b> : {{book.booking_date}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}} ({{book.duration}} mins)<br><b>Room</b> : {{book.room}}<br>Meeting is with {{book.capacity}} people</p>
+                {% else %}
+                  <p><b>Date</b> : {{book.booking_date}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}} ({{book.duration}} mins)<br><b>Room</b> : {{book.room}}<br>Meeting is with {{book.capacity}} people. Some of these people include {{book.others}}</p>
+                {% endif %}
               </div>
               <div class="card-action">
                 <a href="{% url 'delete' username book.booking_date book.booking_start book.room %}">Delete booking</a>
@@ -52,7 +56,11 @@
         <div class="col s12 m6 l4 xl3">
           <div style="display: inline-block;">
             <div class="card-panel teal hoverable">
+              {% if book.others == '' %}
                 <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
+              {% else %}
+                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people, whcih includes {{book.others}}</span>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -72,7 +80,11 @@
         <div class="col s12 m6 l4 xl3">
           <div style="display: inline-block;">
             <div class="card-panel teal hoverable">
+              {% if book.others == '' %}
                 <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
+              {% else %}
+                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people, whcih includes {{book.others}}</span>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -92,7 +104,11 @@
         <div class="col s12 m6 l4 xl3">
           <div style="display: inline-block;">
             <div class="card-panel teal hoverable">
+              {% if book.others == '' %}
                 <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
+              {% else %}
+                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people, whcih includes {{book.others}}</span>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -112,7 +128,11 @@
         <div class="col s12 m6 l4 xl3">
           <div style="display: inline-block;">
             <div class="card-panel teal hoverable">
+              {% if book.others == '' %}
                 <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
+              {% else %}
+                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people, whcih includes {{book.others}}</span>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -144,18 +164,11 @@
     var options = [
       {% if bookings != '[]' %}
       {% for book in bookings %}
-       {selector: '#l1_{{ forloop.counter }}', offset: 150, callback: function(el) {
+       {selector: '#l1_{{ forloop.counter }}', offset: 50, callback: function(el) {
          Materialize.fadeInImage($(el));
        } },
      {% endfor %}
      {% endif %}
-    //  {% if allBookings != '[]' %}
-    //  {% for book in allBookings %}
-    //   {selector: '#l2_{{ forloop.counter }}', offset: 150, callback: function(el) {
-    //     Materialize.fadeInImage($(el));
-    //   } },
-    // {% endfor %}
-    // {% endif %}
    ];
    Materialize.scrollFire(options);
   }
