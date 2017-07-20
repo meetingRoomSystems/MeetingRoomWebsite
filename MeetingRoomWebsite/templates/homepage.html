@@ -8,6 +8,9 @@
 <script src="{% static 'fullcalendar/lib/moment.min.js' %}"></script>
 <link href="{% static 'fullcalendar/fullcalendar.print.min.css' %}" rel='stylesheet' media='print' />
 <script src="{% static 'fullcalendar/fullcalendar.min.js' %}"></script>
+<link rel='stylesheet' href="{% static 'css/jquery.qtip.min.css' %}" />
+<script src="{% static 'js/jquery.qtip.min.js' %}"></script>
+
 <style>
   body {
     margin: 40px 10px;
@@ -85,6 +88,29 @@
   			weekNumberCalculation: 'ISO',
   			navLinks: true, // can click day/week names to navigate views
   			eventLimit: true, // allow "more" link when too many events
+        eventMouseover: function (data, event, view) {
+
+            tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">'+ data.title + '</br></div>';
+
+
+            $("body").append(tooltip);
+            $(this).mouseover(function (e) {
+                $(this).css('z-index', 10000);
+                $('.tooltiptopicevent').fadeIn('500');
+                $('.tooltiptopicevent').fadeTo('10', 1.9);
+            }).mousemove(function (e) {
+                $('.tooltiptopicevent').css('top', e.pageY + 10);
+                $('.tooltiptopicevent').css('left', e.pageX + 20);
+            });
+
+
+        },
+        eventMouseout: function (data, event, view) {
+            $(this).css('z-index', 8);
+
+            $('.tooltiptopicevent').remove();
+
+        },
   			events: [
           {% for book in bookings %}
           {% if book.others == "" %}
