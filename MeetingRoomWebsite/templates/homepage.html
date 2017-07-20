@@ -1,150 +1,55 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
+{% block style %}
+<meta charset='utf-8' />
+<link rel='stylesheet' href="{% static 'fullcalendar/lib/cupertino/jquery-ui.min.css' %}"/>
+<link rel='stylesheet' href="{% static 'fullcalendar/fullcalendar.min.css' %}" />
+<script src="{% static 'fullcalendar/lib/moment.min.js' %}"></script>
+<link href="{% static 'fullcalendar/fullcalendar.print.min.css' %}" rel='stylesheet' media='print' />
+<script src="{% static 'fullcalendar/fullcalendar.min.js' %}"></script>
+<style>
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+</style>
+{% endblock style %}
 
 {% block content %}
   <main>
     <h2>Welcome {{fullname}}</h2>
     <br>
-    <h3>Upcoming Bookings</h3>
-    <div class="row"  id="list1">
-      {% if bookings != '[]' %}
-      {% for book in bookings %}
-        <div class="col s12 m12 l9" id='l1_{{ forloop.counter }}' style="opacity: 0;">
-          <div class="card horizontal hoverable z-depth-5">
-            <div class="card-image">
-              {% if book.room == '1' %}
-               <img src="{% static 'room1.jpg' %}">
-              {% elif book.room == '2' %}
-               <img src="{% static 'room2.jpg' %}">
-              {% elif book.room == '3' %}
-               <img src="{% static 'room3.jpg' %}">
-              {% elif book.room == '4' %}
-               <img src="{% static 'room4.jpg' %}">
-              {% endif %}
-            </div>
-            <div class="card-stacked">
-              <div class="card-content">
-                {% if book.others == '' %}
-                  <p><b>Date</b> : {{book.booking_date}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}} ({{book.duration}} mins)<br><b>Room</b> : {{book.room}}<br>Meeting is with {{book.capacity}} people</p>
-                {% else %}
-                  <p><b>Date</b> : {{book.booking_date}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}} ({{book.duration}} mins)<br><b>Room</b> : {{book.room}}<br>Meeting is with {{book.capacity}} people. Some of these people include {{book.others}}</p>
-                {% endif %}
-              </div>
-              <div class="card-action">
-                <a href="{% url 'delete' username book.booking_date book.booking_start book.room %}">Delete booking</a>
-              </div>
-            </div>
-          </div>
+    <h3>Your Upcoming Bookings</h3>
+    {% if bookings != '[]' %}
+      <div id='calendar'></div>
+    {% else %}
+    <div class="col s12 m6 l4 xl3">
+        <div class="card-panel red lighten-1 hoverable">
+            <span class="white-text"><b>No Upcoming Bookings</b></span>
         </div>
-      {% endfor %}
-      {% else %}
-      <div class="col s12 m6 l4 xl3">
-          <div class="card-panel red lighten-1 hoverable">
-              <span class="white-text"><b>No Upcoming Bookings</b></span>
-          </div>
-      </div>
-      {% endif %}
     </div>
+    {% endif %}
+    <br>
 <div class="divider"></div>
   <br><br>
     <h3>All bookings for today</h3>
-    <h4>Room 1:</h4>
-    <div class="row" id="rm1">
-      {% if rm1 %}
-        {% for book in rm1 %}
-        <div class="col s12 m6 l4 xl3">
-          <div style="display: inline-block;">
-            <div class="card-panel teal hoverable">
-              {% if book.others == '' %}
-                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
-              {% else %}
-                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people, which includes {{book.others}}</span>
-              {% endif %}
-            </div>
-          </div>
+    {% if allBookings != '[]' %}
+      <div id='calendar2'></div>
+    {% else %}
+    <div class="col s12 m6 l4 xl3">
+        <div class="card-panel red lighten-1 hoverable">
+            <span class="white-text"><b>No Bookings For Today</b></span>
         </div>
-        {% endfor %}
-      {% else %}
-      <div class="col s12 m6 l4 xl3">
-          <div class="card-panel red lighten-1 hoverable">
-              <span class="white-text"><b>No bookings in room 1 today</b></span>
-          </div>
-      </div>
-      {% endif %}
     </div>
-    <h4>Room 2:</h4>
-    <div class="row" id="rm2">
-      {% if rm2 %}
-        {% for book in rm2 %}
-        <div class="col s12 m6 l4 xl3">
-          <div style="display: inline-block;">
-            <div class="card-panel teal hoverable">
-              {% if book.others == '' %}
-                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
-              {% else %}
-                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people, which includes {{book.others}}</span>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      {% else %}
-      <div class="col s12 m6 l4 xl3">
-          <div class="card-panel red lighten-1 hoverable">
-              <span class="white-text"><b>No bookings in room 2 today</b></span>
-          </div>
-      </div>
-      {% endif %}
-    </div>
-    <h4>Room 3:</h4>
-    <div class="row" id="rm3">
-      {% if rm3 %}
-        {% for book in rm3 %}
-        <div class="col s12 m6 l4 xl3">
-          <div style="display: inline-block;">
-            <div class="card-panel teal hoverable">
-              {% if book.others == '' %}
-                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
-              {% else %}
-                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people, which includes {{book.others}}</span>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      {% else %}
-      <div class="col s12 m6 l4 xl3">
-          <div class="card-panel red lighten-1 hoverable">
-              <span class="white-text"><b>No bookings in room 3 today</b></span>
-          </div>
-      </div>
-      {% endif %}
-    </div>
-    <h4>Room 4:</h4>
-    <div class="row" id="rm4">
-      {% if rm4 %}
-        {% for book in rm4 %}
-        <div class="col s12 m6 l4 xl3">
-          <div style="display: inline-block;">
-            <div class="card-panel teal hoverable">
-              {% if book.others == '' %}
-                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people</span>
-              {% else %}
-                <span class="white-text"><b>By</b> : {{book.fullname}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}}<br><b>Duration</b> : {{book.duration}} minutes<br>Meeting is with {{book.capacity}} people, which includes {{book.others}}</span>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      {% else %}
-      <div class="col s12 m6 l4 xl3">
-          <div class="card-panel red lighten-1 hoverable">
-              <span class="white-text"><b>No bookings in room 4 today</b></span>
-          </div>
-      </div>
-      {% endif %}
-    </div>
+    {% endif %}
      <br><br><br>
   </main>
 
@@ -161,18 +66,111 @@
     Materialize.toast('{{deleted}}', 4000,'rounded');
     {% endif %}
     display_ct();
-    var options = [
-      {% if bookings != '[]' %}
-      {% for book in bookings %}
-       {selector: '#l1_{{ forloop.counter }}', offset: 50, callback: function(el) {
-         Materialize.fadeInImage($(el));
-       } },
-     {% endfor %}
-     {% endif %}
-   ];
-   Materialize.scrollFire(options);
   }
 </script>
+<script>
+  $(document).ready(function() {
+    $('#calendar').fullCalendar({
+        theme: true,
+        weekends: false,
+        minTime: "08:00:00",
+        maxTime: "18:00:00",
+        header: {
+  				left: 'prev,next today',
+  				center: 'title',
+  				right: 'month,agendaWeek,agendaDay,listWeek'
+  			},
+        weekNumbers: true,
+  			weekNumbersWithinDays: true,
+  			weekNumberCalculation: 'ISO',
+  			navLinks: true, // can click day/week names to navigate views
+  			eventLimit: true, // allow "more" link when too many events
+  			events: [
+          {% for book in bookings %}
+          {% if book.others == "" %}
+  				{
+  					title: 'Room {{book.room}}',
+  					start: '{{book.booking_date}}T{{book.booking_start}}',
+            end: '{{book.booking_date}}T{{book.booking_end}}',
+            {% if book.room == '2' %}
+            color: 'yellow',
+            {% elif book.room == '3' %}
+            color: 'red',
+            {% elif book.room == '4' %}
+            color: 'green',
+            {% endif %}
+            textColor: 'black',
+  				},
+          {% else %}
+          {
+  					title: 'Room {{book.room}} with {{book.others}}',
+  					start: '{{book.booking_date}}T{{book.booking_start}}',
+            end: '{{book.booking_date}}T{{book.booking_end}}',
+            {% if book.room == '2' %}
+            color: 'yellow',
+            {% elif book.room == '3' %}
+            color: 'red',
+            {% elif book.room == '4' %}
+            color: 'green',
+            {% endif %}
+            textColor: 'black',
+  				},
+          {% endif %}
+          {% endfor %}
+  			]
+    })
+
+  });
+</script>
+<script>
+  $(document).ready(function() {
+    $('#calendar2').fullCalendar({
+        theme: true,
+        weekends: false,
+        minTime: "08:00:00",
+        maxTime: "18:00:00",
+        visibleRange: {
+          start: '{{today}}',
+          end: '{{today}}'
+        },
+        defaultView: 'list',
+  			events: [
+          {% for book in allBookings %}
+          {% if book.others == "" %}
+  				{
+  					title: 'Room {{book.room}} : {{book.fullname}}',
+  					start: '{{book.booking_date}}T{{book.booking_start}}',
+            end: '{{book.booking_date}}T{{book.booking_end}}',
+            {% if book.room == '2' %}
+            color: 'yellow',
+            {% elif book.room == '3' %}
+            color: 'red',
+            {% elif book.room == '4' %}
+            color: 'green',
+            {% endif %}
+            textColor: 'black',
+  				},
+          {% else %}
+          {
+  					title: 'Room {{book.room}} : {{book.fullname}} with {{book.others}}',
+  					start: '{{book.booking_date}}T{{book.booking_start}}',
+            end: '{{book.booking_date}}T{{book.booking_end}}',
+            {% if book.room == '2' %}
+            color: 'yellow',
+            {% elif book.room == '3' %}
+            color: 'red',
+            {% elif book.room == '4' %}
+            color: 'green',
+            {% endif %}
+            textColor: 'black',
+  				},
+          {% endif %}
+          {% endfor %}
+  			]
+    })
+
+  });
+  </script>
 
 
 

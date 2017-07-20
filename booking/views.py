@@ -180,10 +180,8 @@ def homepage(request,username):
                 'fullname':fullname.title(),
                 'username':username,
                 'bookings':upcomingBookings,
-                'rm1':rm1,
-                'rm2':rm2,
-                'rm3':rm3,
-                'rm4':rm4,
+                'allBookings':allBookings,
+                'today' : datetime.datetime.today().strftime('%Y-%m-%d'),
                 'message': message,
                 'role' : role,
                 'deleted':deleted,
@@ -193,10 +191,8 @@ def homepage(request,username):
                 'fullname':fullname.title(),
                 'username':username,
                 'bookings':upcomingBookings,
-                'rm1':rm1,
-                'rm2':rm2,
-                'rm3':rm3,
-                'rm4':rm4,
+                'allBookings':allBookings,
+                'today' : datetime.datetime.today().strftime('%Y-%m-%d'),
                 'message': message,
                 'role' : role,
             })
@@ -208,10 +204,8 @@ def homepage(request,username):
                 'fullname':fullname.title(),
                 'username':username,
                 'bookings':upcomingBookings,
-                'rm1':rm1,
-                'rm2':rm2,
-                'rm3':rm3,
-                'rm4':rm4,
+                'allBookings':allBookings,
+                'today' : datetime.datetime.today().strftime('%Y-%m-%d'),
                 'role' : role,
                 'deleted':deleted,
             })
@@ -220,10 +214,8 @@ def homepage(request,username):
                 'fullname':fullname.title(),
                 'username':username,
                 'bookings':upcomingBookings,
-                'rm1':rm1,
-                'rm2':rm2,
-                'rm3':rm3,
-                'rm4':rm4,
+                'allBookings':allBookings,
+                'today' : datetime.datetime.today().strftime('%Y-%m-%d'),
                 'role' : role,
              })
 
@@ -402,55 +394,16 @@ def allBookings(request,username):
               'visibility':'hidden',
           })
 
-    #  if it is an ajax call get all bookings for a certain date and send the informnation in json format
-    if request.method == 'POST':
-        date = request.POST.get('date')
-        type = request.POST.get('type')
-
-        if type == '1':
-            outside = True
-        else:
-            outside = False
-
-        if outside:
-            return render(request,'allBookings.html',{
-                'fullname':fullname.title(),
-                'username':username,
-                'date':'1',
-                'role' : role,
-            })
-        else:
-            allBookingURL = url + 'getbooking.php?booking_date={}'.format(date)
-            allBookingResults =  json.loads(requests.get(allBookingURL).text)
-            allBookings = allBookingResults['bookings']
-            rm1 = []
-            rm2 = []
-            rm3 = []
-            rm4 = []
-            if allBookings != '[]':
-                # put each booking to its correct room
-                for booking in allBookings:
-                    if booking['room'] == '1':
-                        rm1.append(booking)
-                    elif booking['room'] == '2':
-                        rm2.append(booking)
-                    elif booking['room'] == '3':
-                        rm3.append(booking)
-                    elif booking['room'] == '4':
-                        rm4.append(booking)
-            response_data = {"rm1":rm1,"rm2":rm2,"rm3":rm3,"rm4":rm4}
-
-            return HttpResponse(
-                json.dumps(response_data),
-                content_type="application/json"
-            )
-    else:
-        return render(request,'allBookings.html',{
-            'fullname':fullname.title(),
-            'username':username,
-            'date':'2',
-            'role' : role,
-        })
+    allBookingURL = url + 'getbooking.php?all=2'
+    allBookingResults =  json.loads(requests.get(allBookingURL).text)
+    allBookings = allBookingResults['bookings']
+    return render(request,'allBookings.html',{
+        'fullname':fullname.title(),
+        'username':username,
+        'bookings':allBookings,
+        'date':'2',
+        'role' : role,
+    })
 
 def adminSettings(request,username):
     """ this page allows an admin to change the room of any booking or make any user an admin """
