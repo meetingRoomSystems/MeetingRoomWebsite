@@ -20,7 +20,11 @@
         <div class="col s12 m6">
           <div class="card blue-grey darken-1 hoverable z-depth-5">
             <div class="card-content white-text">
-              <p><b>By</b> : {{book.fullname}} <br><b>Date</b> : {{book.booking_date}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}} ({{book.duration}} mins)<br><b>Room</b> : {{book.room}}<br>Meeting is with {{book.capacity}} people</p>
+              {% if book.others == '' %}
+                <p><b>By</b> : {{book.fullname}} <br><b>Date</b> : {{book.booking_date}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}} ({{book.duration}} mins)<br><b>Room</b> : {{book.room}}<br>Meeting is with {{book.capacity}} people</p>
+              {% else %}
+                <p><b>By</b> : {{book.fullname}} <br><b>Date</b> : {{book.booking_date}} <br><b>Time</b> : {{book.booking_start}} - {{book.booking_end}} ({{book.duration}} mins)<br><b>Room</b> : {{book.room}}<br>Meeting is with {{book.capacity}} people, which includes {{book.others}}</p>
+              {% endif %}
             </div>
             <div class="card-action white-text">
               <p>Change to room...</p>

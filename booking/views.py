@@ -492,7 +492,7 @@ def adminSettings(request,username):
                     availableRooms = list(rooms.values())
             else:
                 availableRooms = ['1','2','3','4']
-            bookingDetails = {'username':book['username'],'fullname':book['fullname'],'duration':book['duration'],'booking_date':book['booking_date'],'booking_start':book['booking_start'],'booking_end':book['booking_end'],'room':book['room'],'capacity':int(book['capacity']),'availabeRooms':availableRooms}
+            bookingDetails = {'username':book['username'],'fullname':book['fullname'],'duration':book['duration'],'booking_date':book['booking_date'],'booking_start':book['booking_start'],'booking_end':book['booking_end'],'room':book['room'],'capacity':int(book['capacity']),'availabeRooms':availableRooms,'others':book['others']}
             results.append(bookingDetails)
     bookingCountURL = url + 'getNumberOfBookings.php'
     bookingCountResults = json.loads(requests.get(bookingCountURL).text)
