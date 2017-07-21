@@ -19,6 +19,9 @@
     max-width: 900px;
     margin: 0 auto;
   }
+  .fc-today {
+    background: #FFFFCC  !important;
+  }
 </style>
 {% endblock style %}
 
@@ -89,11 +92,11 @@
   					start: '{{book.booking_date}}T{{book.booking_start}}',
             end: '{{book.booking_date}}T{{book.booking_end}}',
             {% if book.room == '2' %}
-            color: 'yellow',
-            {% elif book.room == '3' %}
-            color: 'red',
-            {% elif book.room == '4' %}
             color: 'green',
+            {% elif book.room == '3' %}
+            color: 'orange',
+            {% elif book.room == '4' %}
+            color: 'red',
             {% endif %}
             textColor: 'black',
             room: '{{book.room}}',
@@ -104,11 +107,11 @@
   					start: '{{book.booking_date}}T{{book.booking_start}}',
             end: '{{book.booking_date}}T{{book.booking_end}}',
             {% if book.room == '2' %}
-            color: 'yellow',
-            {% elif book.room == '3' %}
-            color: 'red',
-            {% elif book.room == '4' %}
             color: 'green',
+            {% elif book.room == '3' %}
+            color: 'orange',
+            {% elif book.room == '4' %}
+            color: 'red',
             {% endif %}
             textColor: 'black',
             room: '{{book.room}}',
