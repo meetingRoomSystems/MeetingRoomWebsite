@@ -31,6 +31,7 @@ def login(request):
     if(successCode == 1):
         # check if we have the username in the local django database. If not add it
         fullname = loginResults['fullname']
+        role = loginResults['role']
         try:
             database = UserInfo.objects.get(username = username)
             if(database.loggedIn):
@@ -39,6 +40,7 @@ def login(request):
                         'visibility':'visible',
                     })
             database.loggedIn = True
+            database.role = role
             database.save()
             exists = True
         except UserInfo.DoesNotExist:
