@@ -155,22 +155,7 @@ def homepage(request,username):
     allBookingURL = url + 'getbooking.php?booking_date={}'.format(datetime.datetime.today().strftime('%Y-%m-%d'))
     allBookingResults =  json.loads(requests.get(allBookingURL).text)
     allBookings = allBookingResults['bookings']
-    rm1 = []
-    rm2 = []
-    rm3 = []
-    rm4 = []
-    # add the bookings to their respective rooms
-    if allBookings != '[]':
-        for booking in allBookings:
-            if booking['room'] == '1':
-                rm1.append(booking)
-            elif booking['room'] == '2':
-                rm2.append(booking)
-            elif booking['room'] == '3':
-                rm3.append(booking)
-            elif booking['room'] == '4':
-                rm4.append(booking)
-
+    
     # if there is a message to be shown as toast
     if request.session.has_key('message'):
         message = request.session['message']

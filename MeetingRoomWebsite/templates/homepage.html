@@ -22,6 +22,11 @@
     max-width: 900px;
     margin: 0 auto;
   }
+  #calendar2 {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
 
 </style>
 {% endblock style %}
@@ -83,34 +88,13 @@
   				center: 'title',
   				right: 'month,agendaWeek,agendaDay,listWeek'
   			},
+        height: 540,
+        allDaySlot:false,
         weekNumbers: true,
   			weekNumbersWithinDays: true,
   			weekNumberCalculation: 'ISO',
   			navLinks: true, // can click day/week names to navigate views
   			eventLimit: true, // allow "more" link when too many events
-        eventMouseover: function (data, event, view) {
-
-            tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">'+ data.title + '</br></div>';
-
-
-            $("body").append(tooltip);
-            $(this).mouseover(function (e) {
-                $(this).css('z-index', 10000);
-                $('.tooltiptopicevent').fadeIn('500');
-                $('.tooltiptopicevent').fadeTo('10', 1.9);
-            }).mousemove(function (e) {
-                $('.tooltiptopicevent').css('top', e.pageY + 10);
-                $('.tooltiptopicevent').css('left', e.pageX + 20);
-            });
-
-
-        },
-        eventMouseout: function (data, event, view) {
-            $(this).css('z-index', 8);
-
-            $('.tooltiptopicevent').remove();
-
-        },
   			events: [
           {% for book in bookings %}
           {% if book.others == "" %}
@@ -159,7 +143,14 @@
           start: '{{today}}',
           end: '{{today}}'
         },
-        defaultView: 'list',
+        header: {
+  				left: '',
+  				center: '',
+  				right: ''
+  			},
+        height: 500,
+        allDaySlot:false,
+        defaultView: 'agendaDay',
   			events: [
           {% for book in allBookings %}
           {% if book.others == "" %}

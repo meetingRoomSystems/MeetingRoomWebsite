@@ -25,6 +25,15 @@
 
 {% block content %}
   <main>
+    <br>
+    <h5>Pick a Room: </h5>
+    <select id="room_selector">
+      <option value="all">All</option>
+      <option value="1">Room 1</option>
+      <option value="2">Room 2</option>
+      <option value="3">Room 3</option>
+      <option value="4">Room 4</option>
+    </select>
     <div id='calendar'></div>
     <br>
   </main>
@@ -86,7 +95,8 @@
             {% elif book.room == '4' %}
             color: 'green',
             {% endif %}
-            textColor: 'black'
+            textColor: 'black',
+            room: '{{book.room}}',
   				},
           {% else %}
           {
@@ -100,14 +110,24 @@
             {% elif book.room == '4' %}
             color: 'green',
             {% endif %}
-            textColor: 'black'
+            textColor: 'black',
+            room: '{{book.room}}',
   				},
           {% endif %}
           {% endfor %}
-  			]
+  			],
+        eventRender: function eventRender( event, element, view ) {
+          return ['all', event.room].indexOf($('#room_selector').val()) >= 0
+        }
     })
 
   });
+  $('select').material_select();
+  $('#room_selector').on('change',function(){
+    $('#calendar').fullCalendar('rerenderEvents');
+  });
+
+
   </script>
 
 
